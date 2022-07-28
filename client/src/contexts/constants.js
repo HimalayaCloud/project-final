@@ -1,7 +1,7 @@
 export const apiUrl =
   process.env.NODE_ENV !== "production"
     ? "http://localhost:5000/api"
-    : "somedeployedURL";
+    : "https://nameless-springs-05142.herokuapp.com/api";
 
 export const LOCAL_STORAGE_TOKEN_NAME = 'access-token';
 
