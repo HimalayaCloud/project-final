@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const authRouter = require('./routes/auth')
 const postRouter = require('./routes/posts')
+const vehicleRouter = require('./routes/vehicles')
 
 const connectDB = async () => {
   try {
@@ -26,6 +27,7 @@ app.use(cors())
 
 app.use('/api/auth', authRouter);
 app.use('/api/posts' , postRouter);
+app.use('/api/vehicles', vehicleRouter);
 
 const PORT = process.env.PORT || 5000;
 

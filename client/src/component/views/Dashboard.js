@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import NavbarMenu from "../layout/NavbarMenu";
 import { PostsContext } from "../../contexts/PostContext";

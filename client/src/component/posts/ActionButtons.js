@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { PostsContext } from "../../contexts/PostContext";
 
 const ActionButtons = ({ url, _id }) => {
-  const { deletePost, findPost, showUpdatePostModal, setShowUpdatePostModal } =
+  const { deletePost, findPost, setShowUpdatePostModal } =
     useContext(PostsContext);
 
   const choosePost = (postId) => {

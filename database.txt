@@ -1,0 +1,30 @@
+Edit Job Url phai nhap san
+
+Máy Xúc: ( Hãng : Komatsu, Hitachi,...)(Mã máy(string) - Công Suất(number) - Đời(number) - Năm sản xuất (number) - Dung Tích Gầu(number) ) => search + lọc
+-Dung tích Gầu
+-Đào:+Bánh Xích, Bánh Lốp  
+-Lật:+Bánh Xích, Bánh Lốp  
+
+
+Lu: (Hãng : Sakai, HAM, ...)(Mã máy(string) - Công Suất(number) - Đời(number) - Năm sản xuất (number) - Trọng Tải(number) )
+-Lu tĩnh
+-Lu rung
+
+Ủi:(Hãng : )((Mã máy(string) - Công Suất(number) - Đời(number) - Năm sản xuất (number))
+
+Cẩu: ( Hãng : Komatsu, Hitachi,...)(Mã máy(string) - Công Suất(number) - Đời(number) - Năm sản xuất (number) - Trọng tải)
+-Chân nhện
+- Lốp
+- Xích
+
+*Xuất xứ
+*Số giờ hoạt động
+*Số Khung
+*Số Máy
+*Giá tiền ( Lọc / triệu)
+*Tình trạng máy(Đang ở nước ngoài, Trên Biển, Đã về Bãi(HP,HN,SG))
+*Đã bán/ Đã Cọc
+*Ghi chú 
+*Hình ảnh
+*Link Drive
+

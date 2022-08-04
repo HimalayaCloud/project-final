@@ -10,63 +10,65 @@ import { AuthContext } from "../../contexts/AuthContext";
 const NavbarMenu = () => {
   const {
     authState: { user: username },
-    logoutUser
+    logoutUser,
   } = useContext(AuthContext);
 
-  const onLogout = () => logoutUser()
+  const onLogout = () => logoutUser();
   return (
-    <NavBar expand="lg" bg="primary" variant="dark" className="shadow">
-      <NavBar.Brand className="font-weight-bolder text-white">
-        <img
-          src={learnItLogo}
-          alt="learnItLogo"
-          width="32"
-          height="32"
-          className="mr-2"
-        ></img>
-        SearchApp
-      </NavBar.Brand>
-      <NavBar.Toggle aria-controls="basic-navbar-nav" />
-      <NavBar.Collapse
-        id="basic-navbar-nav"
-        style={{ justifyContent: "space-between" }}
-      >
-        <Nav className="mr-auto">
-          <Nav.Link
-            className="font-weight-bolder text-white"
-            to="/dashboard"
-            as={Link}
-          >
-            Dashboard
-          </Nav.Link>
-          <Nav.Link
-            className="font-weight-bolder text-white"
-            to="/about"
-            as={Link}
-          >
-            About
-          </Nav.Link>
-        </Nav>
-        <Nav className="align-center mr-10">
-          <Nav.Link className="font-weight-bolder text-white" disabled>
-            Welcome {username}
-          </Nav.Link>
-          <Button
-            variant="secondary"
-            className="font-weight-bolder text-white"
-            onClick={onLogout}
-          >
-            <img
-              src={logoutIcon}
-              alt="logoutIcon"
-              width={32}
-              height={32}
-              className="mr-2"
-            ></img>
-            Logout
-          </Button>
-        </Nav>
-      </NavBar.Collapse>
+    <NavBar expand="lg" variant="dark" className="shadow bg-[#fe9b17]">
+      <div className="flex w-[1280px] mx-auto">
+        <NavBar.Brand className="font-weight-bolder text-white flex items-center pb-[5px] pt-0">
+          <img
+            src={learnItLogo}
+            alt="learnItLogo"
+            width="32"
+            height="32"
+            className="mr-2"
+          ></img>
+          SearchApp
+        </NavBar.Brand>
+        <NavBar.Toggle aria-controls="basic-navbar-nav" />
+        <NavBar.Collapse
+          id="basic-navbar-nav"
+          style={{ justifyContent: "space-between" }}
+        >
+          <Nav className="mr-auto">
+            <Nav.Link
+              className="font-weight-bolder text-white"
+              to="/dashboard"
+              as={Link}
+            >
+              Dashboard
+            </Nav.Link>
+            <Nav.Link
+              className="font-weight-bolder text-white"
+              to="/trang-chu"
+              as={Link}
+            >
+              Trang Chủ
+            </Nav.Link>
+          </Nav>
+          <Nav className="align-center">
+            <Nav.Link className="font-weight-bolder text-white" disabled>
+              Welcome {username}
+            </Nav.Link>
+            <Button
+              variant="secondary"
+              className="font-weight-bolder text-white flex items-center bg-black"
+              onClick={onLogout}
+            >
+              <img
+                src={logoutIcon}
+                alt="logoutIcon"
+                width={32}
+                height={32}
+                className="mr-2"
+              ></img>
+              Logout
+            </Button>
+          </Nav>
+        </NavBar.Collapse>
+      </div>
     </NavBar>
   );
 };
