@@ -15,7 +15,7 @@ const NavbarMenu = () => {
 
   const onLogout = () => logoutUser();
   return (
-    <NavBar expand="lg" variant="dark" className="shadow bg-[#fe9b17]">
+    <NavBar expand="lg" variant="dark" className="shadow bg-[#eb6864]">
       <div className="flex w-[1280px] mx-auto">
         <NavBar.Brand className="font-weight-bolder text-white flex items-center pb-[5px] pt-0">
           <img

@@ -8,7 +8,6 @@ const ConstructionVehicle = new Schema({
   },
   vehicle_name: {
     type: String,
-    required: true,
   },
   vehicle_branch: {
     type: String,
