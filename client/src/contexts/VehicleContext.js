@@ -48,7 +48,8 @@ const VehicleContextProvider = ({ children }) => {
     try {
       const response = await axios.post(`${apiUrl}/vehicles`, newVehicle);
       if (response.data.success) {
-        dispatch({ type: ADD_VEHICLE, payload: response.data.vehicle });
+        dispatch({ type: ADD_VEHICLE, payload: response.data.vehicle_info });
+        console.log(response);
         return response.data;
       }
     } catch (error) {
@@ -64,6 +65,11 @@ const VehicleContextProvider = ({ children }) => {
       const response = await axios.delete(`${apiUrl}/vehicles/${vehicleId}`);
       if (response.data.success) {
         dispatch({ type: DELETE_VEHICLE, payload: vehicleId });
+        setShowToast({
+          show: true,
+          message: "Xóa dữ liệu thành công",
+          type: response.data.success ? "success" : "danger",
+        })
       }
     } catch (error) {
       return error.response.data
@@ -76,7 +82,6 @@ const VehicleContextProvider = ({ children }) => {
   const findVehicle = (vehicleId) => {
     const vehicle = vehicleState.vehicles.find((vehicle) => vehicle._id === vehicleId);
     dispatch({ type: FIND_VEHICLE, payload: vehicle });
-    console.log(vehicle);
   };
   // Update Post
   const updateVehicle = async (updatedVehicle) => {
@@ -87,6 +92,7 @@ const VehicleContextProvider = ({ children }) => {
       );
       if (response.data.success) {
         dispatch({ type: UPDATE_VEHICLE, payload: response.data.vehicle });
+        console.log(response)
         return response.data;
       }
     } catch (error) {

@@ -28,18 +28,18 @@ const ConstructionVehicle = new Schema({
     type: String,
     required: true,
   },
-  manufacture_year: {
+  manufacturer_year: {
     type: Number,
   },
   engine_capacity: {
-    type: String,
+    type: Number,
     required: true,
   },
   bucket_capacity: {
-    type: String,
+    type: Number,
   },
   vehicle_tonnage: {
-    type: String,
+    type: Number,
   },
   hours_worked: {
     type: Number,
@@ -50,7 +50,7 @@ const ConstructionVehicle = new Schema({
   },
   vehicle_status: {
     type: String,
-    enum: ['Đang ở nước ngoài', 'Đang ở Việt Nam', 'Đã bán'],
+    enum: ['Đang Ở Nước Ngoài', 'Đang Ở Việt Nam', 'Đã Bán'],
     required: true,
   },
   description: {

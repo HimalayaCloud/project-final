@@ -3,15 +3,16 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Landing from "./component/layout/Landing";
 import Auth from "./component/views/Auth";
 import AuthContextProvider from "./contexts/AuthContext";
-import Dashboard from "./component/views/Dashboard";
+
 import ProtectedRoute from "./component/routing/ProtectedRoute";
 import HomePage from "./component/views/HomePage";
-import PostContextProvider from "./contexts/PostContext";
+
+import VehicleContextProvider from "./contexts/VehicleContext";
 
 function App() {
   return (
     <AuthContextProvider>
-      <PostContextProvider>
+      <VehicleContextProvider>
         <Router>
           <Routes>
             <Route path="/" element={<Landing></Landing>}></Route>
@@ -25,21 +26,17 @@ function App() {
               path="/register"
               element={<Auth authRoute={"register"}></Auth>}
             ></Route>
-            <Route exact path="/dashboard" element={<ProtectedRoute />}>
+            <Route exact element={<ProtectedRoute />}>
               <Route
                 exact
-                path="/dashboard"
-                element={<Dashboard></Dashboard>}
+                path="/trang-chu"
+                element={<HomePage></HomePage>}
               ></Route>
-            </Route>
-            <Route exact element={<ProtectedRoute />}>
-              <Route exact path="/trang-chu" element={<HomePage></HomePage>}></Route>
             </Route>
           </Routes>
         </Router>
-      </PostContextProvider>
+      </VehicleContextProvider>
     </AuthContextProvider>
   );
 }
-
 export default App;

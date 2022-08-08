@@ -2,36 +2,23 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { VehiclesContext } from "../../contexts/VehicleContext";
 
-const AddVehicleModal = () => {
+const UpdateVehicleModal = () => {
   //   Context
   const {
-    showAddVehicleModal,
-    setShowAddVehicleModal,
-    addVehicle,
+    vehicleState: { vehicle },
+    showUpdateVehicleModal,
+    setShowUpdateVehicleModal,
+    updateVehicle,
     setShowToast,
   } = useContext(VehiclesContext);
 
   //   State
 
-  const [newVehicle, setNewVehicle] = useState({
-    vehicle_name: "",
-    vehicle_type: "",
-    vehicle_branch: "",
-    wheel_type: "",
-    manufacturer: "",
-    manufacturer_country: "",
-    manufacturer_year: "",
-    vehicle_model: "",
-    engine_capacity: "",
-    bucket_capacity: "",
-    vehicle_tonnage: "",
-    hours_worked: "",
-    price: "",
-    vehicle_status: "",
-    description: "",
-    picture: "",
-    driver_link: "",
-  });
+  const [updatedVehicle, setUpdatedVehicle] = useState(vehicle);
+
+  useEffect(() => {
+    setUpdatedVehicle(vehicle)
+  },[vehicle])
 
   const {
     vehicle_name,
@@ -51,27 +38,28 @@ const AddVehicleModal = () => {
     description,
     picture,
     driver_link,
-  } = newVehicle;
+  } = updatedVehicle;
 
-  const onChangeNewVehicleForm = (event) => {
-    setNewVehicle({ ...newVehicle, [event.target.name]: event.target.value });
+  const onChangeUpdateVehicleForm = (event) => {
+    setUpdatedVehicle({ ...updatedVehicle, [event.target.name]: event.target.value });
   };
 
   const vehicleName = `${vehicle_type} ${vehicle_branch} ${wheel_type} ${manufacturer} ${vehicle_model} năm ${manufacturer_year} nhập từ ${manufacturer_country}`;
-  useEffect(() => {
-    setNewVehicle({ ...newVehicle, vehicle_name: vehicleName });
-  },[vehicleName])
   
+  useEffect(() => {
+    setUpdatedVehicle({ ...updatedVehicle, vehicle_name: vehicleName });
+  }, [vehicleName]);
+
   const closeDialog = () => {
-    resetAddVehicleData();
+    setUpdatedVehicle(vehicle)
+    setShowUpdateVehicleModal(false)
   };
-  // console.log(newVehicle)
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setNewVehicle({ ...newVehicle, vehicle_name: vehicleName });
-    const { success, message } = await addVehicle(newVehicle);
-    resetAddVehicleData();
+    setUpdatedVehicle({ ...updatedVehicle, vehicle_name: vehicleName });
+    const { success, message } = await updateVehicle(updatedVehicle);
+    setShowUpdateVehicleModal(false)
     setShowToast({
       show: true,
       message: message,
@@ -79,30 +67,10 @@ const AddVehicleModal = () => {
     });
   };
 
-  const resetAddVehicleData = () => {
-    setNewVehicle({
-      vehicle_type: "",
-      vehicle_branch: "",
-      wheel_type: "",
-      manufacturer: "",
-      manufacturer_country: "",
-      manufacturer_year: "",
-      vehicle_model: "",
-      engine_capacity: "",
-      bucket_capacity: "",
-      vehicle_tonnage: "",
-      hours_worked: "",
-      price: "",
-      vehicle_status: "",
-      description: "",
-      picture: "",
-      driver_link: "",
-    });
-    setShowAddVehicleModal(false);
-  };
+
   return (
     <Fragment>
-      <Modal show={showAddVehicleModal} onHide={closeDialog}>
+      <Modal show={showUpdateVehicleModal} onHide={closeDialog}>
         <Modal.Header closeButton>
           <Modal.Title>Thêm sản phẩm mới</Modal.Title>
         </Modal.Header>
@@ -114,7 +82,7 @@ const AddVehicleModal = () => {
                 name="vehicle_type"
                 required
                 value={vehicle_type}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               >
                 <option hidden value="" disabled>
                   Chọn loại máy
@@ -132,7 +100,7 @@ const AddVehicleModal = () => {
                   name="vehicle_branch"
                   // required
                   value={vehicle_branch}
-                  onChange={onChangeNewVehicleForm}
+                  onChange={onChangeUpdateVehicleForm}
                 >
                   <option hidden value="" disabled>
                     Chọn nhánh máy
@@ -162,7 +130,7 @@ const AddVehicleModal = () => {
                   name="wheel_type"
                   required
                   value={wheel_type}
-                  onChange={onChangeNewVehicleForm}
+                  onChange={onChangeUpdateVehicleForm}
                 >
                   <option hidden value="" disabled>
                     Chọn loại bánh xe
@@ -192,7 +160,7 @@ const AddVehicleModal = () => {
                 placeholder="Hãng Sản Xuất"
                 name="manufacturer"
                 value={manufacturer}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               />
             </Form.Group>
             <Form.Group className="mb-2">
@@ -201,7 +169,7 @@ const AddVehicleModal = () => {
                 placeholder="Nơi Sản Xuất"
                 name="manufacturer_country"
                 value={manufacturer_country}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2">
@@ -210,7 +178,7 @@ const AddVehicleModal = () => {
                 placeholder="Năm Sản Xuất"
                 name="manufacturer_year"
                 value={manufacturer_year}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2">
@@ -219,7 +187,7 @@ const AddVehicleModal = () => {
                 placeholder="Model Máy"
                 name="vehicle_model"
                 value={vehicle_model}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2">
@@ -228,7 +196,7 @@ const AddVehicleModal = () => {
                 placeholder="Công Suất Máy"
                 name="engine_capacity"
                 value={engine_capacity}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
             {vehicle_type === "Máy Xúc" ? (
@@ -238,7 +206,7 @@ const AddVehicleModal = () => {
                   placeholder="Dung Tích Gầu"
                   name="bucket_capacity"
                   value={bucket_capacity}
-                  onChange={onChangeNewVehicleForm}
+                  onChange={onChangeUpdateVehicleForm}
                 ></Form.Control>
               </Form.Group>
             ) : (
@@ -251,7 +219,7 @@ const AddVehicleModal = () => {
                   placeholder="Trọng Tải"
                   name="vehicle_tonnage"
                   value={vehicle_tonnage}
-                  onChange={onChangeNewVehicleForm}
+                  onChange={onChangeUpdateVehicleForm}
                 ></Form.Control>
               </Form.Group>
             ) : (
@@ -263,7 +231,7 @@ const AddVehicleModal = () => {
                 placeholder="Số Giờ"
                 name="hours_worked"
                 value={hours_worked}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2">
@@ -272,7 +240,7 @@ const AddVehicleModal = () => {
                 placeholder="Giá/Triệu"
                 name="price"
                 value={price}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2">
@@ -281,7 +249,7 @@ const AddVehicleModal = () => {
                 name="vehicle_status"
                 required
                 value={vehicle_status}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               >
                 <option hidden value="" disabled>
                   Tình Trạng Máy
@@ -297,7 +265,7 @@ const AddVehicleModal = () => {
                 placeholder="Link Ảnh"
                 name="picture"
                 value={picture}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2">
@@ -306,7 +274,7 @@ const AddVehicleModal = () => {
                 placeholder="Link Google Drive"
                 name="driver_link"
                 value={driver_link}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2">
@@ -316,7 +284,7 @@ const AddVehicleModal = () => {
                 placeholder="Mô Tả Máy"
                 name="description"
                 value={description}
-                onChange={onChangeNewVehicleForm}
+                onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
           </Modal.Body>
@@ -325,7 +293,7 @@ const AddVehicleModal = () => {
               Hủy
             </Button>
             <Button variant="primary" type="submit">
-              Thêm
+              Sửa
             </Button>
           </Modal.Footer>
         </Form>
@@ -334,4 +302,4 @@ const AddVehicleModal = () => {
   );
 };
 
-export default AddVehicleModal;
+export default UpdateVehicleModal;

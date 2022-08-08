@@ -138,7 +138,7 @@ router.put("/:id", verifyToken, async (req, res) => {
         driver_link,
     };
 
-    const vehicleUpdateCondition = { _id: req.params.id, user: req.userId };
+    const vehicleUpdateCondition = { _id: req.params.id};
     updatedVehicle = await Vehicles.findOneAndUpdate(
       vehicleUpdateCondition,
       updatedVehicle,
@@ -157,7 +157,7 @@ router.put("/:id", verifyToken, async (req, res) => {
     res.json({
       success: true,
       message: "Thay đổi dữ liệu thành công",
-      post: updatedVehicle,
+      vehicle: updatedVehicle,
     });
   } catch (error) {
     console.log(error);
@@ -171,7 +171,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    const vehicleDeleteCondition = { _id: req.params.id, user: req.userId };
+    const vehicleDeleteCondition = { _id: req.params.id};
     const deletedVehicle = await Vehicles.findOneAndDelete(vehicleDeleteCondition);
 
     // User not authorized to delete post

@@ -38,7 +38,7 @@ import {
           vehicle: payload,
         };
       case UPDATE_VEHICLE:
-        const newvehicles = state.vehicles.map((vehicle) => {
+        const newVehicles = state.vehicles.map((vehicle) => {
           if (vehicle._id === payload._id) {
             return payload;
           } else {
@@ -48,7 +48,7 @@ import {
   
         return {
           ...state,
-          vehicles: newvehicles,
+          vehicles: newVehicles,
         };
       default:
         return state;
