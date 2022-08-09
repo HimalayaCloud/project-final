@@ -7,6 +7,7 @@ import AddVehicleModal from "../vehicles/AddVehicleModal";
 import { Table, Toast } from "react-bootstrap";
 import UpdateVehicleModal from "../vehicles/UpdateVehicleModal";
 import SingleVehicle from "../vehicles/SingleVehicle";
+import SearchBar from "../layout/SearchBar";
 
 const HomePage = () => {
   const {
@@ -17,7 +18,6 @@ const HomePage = () => {
     vehicleState: { vehicle, vehicles },
     getVehicles,
     setShowAddVehicleModal,
-    setShowUpdateVehicleModal,
     showToast: { show, message, type },
     setShowToast,
   } = useContext(VehiclesContext);
@@ -45,17 +45,7 @@ const HomePage = () => {
       <AddVehicleModal />
       {vehicle !== null && <UpdateVehicleModal />}
       <div className="h-screen bg-[whitesmoke] pt-12">
-        <div className="w-[1280px] h-[134px] mx-auto bg-white rounded flex items-center">
-          <div className="w-[900px] mx-auto relative flex">
-            <input
-              className="bg-[#FABE001A] w-full rounded-full h-[54px] px-3"
-              placeholder="SearchBar"
-            />
-            <Button className="absolute right-4 top-[8px] bg-[#eb6864] border-transparent">
-              Tìm Kiếm
-            </Button>
-          </div>
-        </div>
+        <SearchBar></SearchBar>
         <div className="w-[1280px] mx-auto flex justify-end">
           <Button
             onClick={() => setShowAddVehicleModal(true)}
@@ -79,7 +69,11 @@ const HomePage = () => {
             <tbody>
               {vehicles.map((vehicle, index) => {
                 return (
-                  <SingleVehicle key={index} index={index} vehicle={vehicle}></SingleVehicle>
+                  <SingleVehicle
+                    key={index}
+                    index={index}
+                    vehicle={vehicle}
+                  ></SingleVehicle>
                 );
               })}
             </tbody>

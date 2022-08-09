@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { VehiclesContext } from "../../contexts/VehicleContext";
@@ -17,11 +18,10 @@ const UpdateVehicleModal = () => {
   const [updatedVehicle, setUpdatedVehicle] = useState(vehicle);
 
   useEffect(() => {
-    setUpdatedVehicle(vehicle)
-  },[vehicle])
+    setUpdatedVehicle(vehicle);
+  }, [vehicle]);
 
   const {
-    vehicle_name,
     vehicle_type,
     vehicle_branch,
     wheel_type,
@@ -41,25 +41,28 @@ const UpdateVehicleModal = () => {
   } = updatedVehicle;
 
   const onChangeUpdateVehicleForm = (event) => {
-    setUpdatedVehicle({ ...updatedVehicle, [event.target.name]: event.target.value });
+    setUpdatedVehicle({
+      ...updatedVehicle,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const vehicleName = `${vehicle_type} ${vehicle_branch} ${wheel_type} ${manufacturer} ${vehicle_model} năm ${manufacturer_year} nhập từ ${manufacturer_country}`;
-  
+
   useEffect(() => {
     setUpdatedVehicle({ ...updatedVehicle, vehicle_name: vehicleName });
   }, [vehicleName]);
 
   const closeDialog = () => {
-    setUpdatedVehicle(vehicle)
-    setShowUpdateVehicleModal(false)
+    setUpdatedVehicle(vehicle);
+    setShowUpdateVehicleModal(false);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
     setUpdatedVehicle({ ...updatedVehicle, vehicle_name: vehicleName });
     const { success, message } = await updateVehicle(updatedVehicle);
-    setShowUpdateVehicleModal(false)
+    setShowUpdateVehicleModal(false);
     setShowToast({
       show: true,
       message: message,
@@ -67,16 +70,16 @@ const UpdateVehicleModal = () => {
     });
   };
 
-
   return (
     <Fragment>
       <Modal show={showUpdateVehicleModal} onHide={closeDialog}>
         <Modal.Header closeButton>
-          <Modal.Title>Thêm sản phẩm mới</Modal.Title>
+          <Modal.Title>Cập nhật thông tin sản phẩm</Modal.Title>
         </Modal.Header>
         <Form onSubmit={onSubmit}>
           <Modal.Body>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Loại Máy :</Form.Label>
               <Form.Control
                 as="select"
                 name="vehicle_type"
@@ -94,7 +97,8 @@ const UpdateVehicleModal = () => {
               </Form.Control>
             </Form.Group>
             {vehicle_type === "Máy Xúc" || vehicle_type === "Máy Lu" ? (
-              <Form.Group className="mb-2">
+              <Form.Group className="mb-2 flex align-center">
+                <Form.Label className="mb-0 w-[37%]">Nhánh Máy :</Form.Label>
                 <Form.Control
                   as="select"
                   name="vehicle_branch"
@@ -124,7 +128,8 @@ const UpdateVehicleModal = () => {
               ""
             )}
             {vehicle_type === "Máy Xúc" || vehicle_type === "Máy Cẩu" ? (
-              <Form.Group className="mb-2">
+              <Form.Group className="mb-2 flex align-center">
+                <Form.Label className="mb-0 w-[37%]">Loại Bánh Xe :</Form.Label>
                 <Form.Control
                   as="select"
                   name="wheel_type"
@@ -154,7 +159,8 @@ const UpdateVehicleModal = () => {
             ) : (
               ""
             )}
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Hãng Sản Xuất :</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Hãng Sản Xuất"
@@ -163,7 +169,8 @@ const UpdateVehicleModal = () => {
                 onChange={onChangeUpdateVehicleForm}
               />
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Nơi Sản Xuất :</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Nơi Sản Xuất"
@@ -172,7 +179,8 @@ const UpdateVehicleModal = () => {
                 onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Năm Sản Xuất :</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Năm Sản Xuất"
@@ -181,7 +189,8 @@ const UpdateVehicleModal = () => {
                 onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Model Máy :</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Model Máy"
@@ -190,7 +199,8 @@ const UpdateVehicleModal = () => {
                 onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Công Suất Máy :</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Công Suất Máy"
@@ -200,7 +210,8 @@ const UpdateVehicleModal = () => {
               ></Form.Control>
             </Form.Group>
             {vehicle_type === "Máy Xúc" ? (
-              <Form.Group className="mb-2">
+              <Form.Group className="mb-2 flex align-center">
+                <Form.Label className="mb-0 w-[37%]">Dung Tích Gầu :</Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="Dung Tích Gầu"
@@ -213,7 +224,8 @@ const UpdateVehicleModal = () => {
               ""
             )}
             {vehicle_type === "Máy Lu" || vehicle_type === "Máy Cẩu" ? (
-              <Form.Group className="mb-2">
+              <Form.Group className="mb-2 flex align-center">
+                <Form.Label className="mb-0 w-[37%]">Trọng Tải :</Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="Trọng Tải"
@@ -225,7 +237,8 @@ const UpdateVehicleModal = () => {
             ) : (
               ""
             )}
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Số Giờ :</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Số Giờ"
@@ -234,7 +247,8 @@ const UpdateVehicleModal = () => {
                 onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Giá :</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Giá/Triệu"
@@ -243,7 +257,8 @@ const UpdateVehicleModal = () => {
                 onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+            <Form.Label className="mb-0 w-[37%]">Tình Trạng :</Form.Label>
               <Form.Control
                 as="select"
                 name="vehicle_status"
@@ -259,7 +274,8 @@ const UpdateVehicleModal = () => {
                 <option value="Đã Bán">Đã Bán</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Link Ảnh :</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Link Ảnh"
@@ -268,7 +284,8 @@ const UpdateVehicleModal = () => {
                 onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Link Driver :</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Link Google Drive"
@@ -277,7 +294,8 @@ const UpdateVehicleModal = () => {
                 onChange={onChangeUpdateVehicleForm}
               ></Form.Control>
             </Form.Group>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-2 flex align-center">
+              <Form.Label className="mb-0 w-[37%]">Mô Tả :</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={5}

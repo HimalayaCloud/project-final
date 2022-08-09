@@ -17,7 +17,7 @@ const NavbarMenu = () => {
   return (
     <NavBar expand="lg" variant="dark" className="shadow bg-[#eb6864]">
       <div className="flex w-[1280px] mx-auto">
-        <NavBar.Brand className="font-weight-bolder text-white flex items-center pb-[5px] pt-0">
+        <NavBar.Brand className="font-weight-bolder text-white flex items-center">
           <img
             src={learnItLogo}
             alt="learnItLogo"
@@ -25,7 +25,7 @@ const NavbarMenu = () => {
             height="32"
             className="mr-2"
           ></img>
-          SearchApp
+          VCM Group
         </NavBar.Brand>
         <NavBar.Toggle aria-controls="basic-navbar-nav" />
         <NavBar.Collapse
@@ -38,7 +38,14 @@ const NavbarMenu = () => {
               to="/trang-chu"
               as={Link}
             >
-              Trang Chủ
+              Quản Lý Sản Phẩm
+            </Nav.Link>
+            <Nav.Link
+              className="font-weight-bolder text-white"
+              to="/trang-san-pham"
+              as={Link}
+            >
+              Trang Sản Phẩm
             </Nav.Link>
           </Nav>
           <Nav className="align-center">

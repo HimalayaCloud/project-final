@@ -8,6 +8,7 @@ import ProtectedRoute from "./component/routing/ProtectedRoute";
 import HomePage from "./component/views/HomePage";
 
 import VehicleContextProvider from "./contexts/VehicleContext";
+import ProductPage from "./component/views/ProductPage";
 
 function App() {
   return (
@@ -31,6 +32,13 @@ function App() {
                 exact
                 path="/trang-chu"
                 element={<HomePage></HomePage>}
+              ></Route>
+            </Route>
+            <Route exact element={<ProtectedRoute />}>
+              <Route
+                exact
+                path="/trang-san-pham"
+                element={<ProductPage></ProductPage>}
               ></Route>
             </Route>
           </Routes>
