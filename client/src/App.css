@@ -126,10 +126,15 @@ button.post-button.btn:active {
   box-shadow: none !important;
 }
 
-.multi-range-slider .thumb *{
-	display: none !important;
+.multi-range-slider .thumb * {
+  display: none !important;
 }
 
 .multi-range-slider .thumb::before {
   top: 1px;
+}
+
+.multi-range-slider .bar-right,
+.multi-range-slider .bar-left {
+  box-shadow: none !important;
 }

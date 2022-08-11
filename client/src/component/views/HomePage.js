@@ -32,7 +32,7 @@ const HomePage = () => {
       <NavbarMenu></NavbarMenu>
       <Toast
         show={show}
-        style={{ position: "fixed", top: "10%", right: "40%" }}
+        style={{ position: "fixed", top: "10%", right: "40%", zIndex:"100" }}
         className={`bg-${type} text-white`}
         onClose={() => setShowToast({ show: false, message: "", type: null })}
         delay={3000}
