@@ -35,7 +35,10 @@ const VehicleContextProvider = ({ children }) => {
     try {
       const response = await axios.get(`${apiUrl}/vehicles`);
       if (response.data.success) {
-        dispatch({ type: VEHICLES_LOADED_SUCCESS, payload: response.data.vehicles });
+        dispatch({
+          type: VEHICLES_LOADED_SUCCESS,
+          payload: response.data.vehicles,
+        });
       }
     } catch (error) {
       dispatch({ type: VEHICLES_LOADED_FAILED, payload: error.message });
@@ -69,7 +72,7 @@ const VehicleContextProvider = ({ children }) => {
           show: true,
           message: "Xóa dữ liệu thành công",
           type: response.data.success ? "success" : "danger",
-        })
+        });
       }
     } catch (error) {
       return error.response.data
@@ -80,7 +83,9 @@ const VehicleContextProvider = ({ children }) => {
 
   // Find Post on click edit
   const findVehicle = (vehicleId) => {
-    const vehicle = vehicleState.vehicles.find((vehicle) => vehicle._id === vehicleId);
+    const vehicle = vehicleState.vehicles.find(
+      (vehicle) => vehicle._id === vehicleId
+    );
     dispatch({ type: FIND_VEHICLE, payload: vehicle });
   };
   // Update Post
@@ -92,13 +97,29 @@ const VehicleContextProvider = ({ children }) => {
       );
       if (response.data.success) {
         dispatch({ type: UPDATE_VEHICLE, payload: response.data.vehicle });
-        console.log(response)
+        console.log(response);
         return response.data;
       }
     } catch (error) {
       return error.response.data
         ? error.response.data
         : { success: false, message: "Server Error" };
+    }
+  };
+
+  // Search Post
+
+  const searchVehicles = async (searchInfo) => {
+    try {
+      const response = await axios.post(`${apiUrl}/vehicles/search`, searchInfo);
+      // if (response.data.success) {
+      //   dispatch({
+      //     type: VEHICLES_LOADED_SUCCESS,
+      //     payload: response.data.vehicles,
+      //   });
+      // }
+    } catch (error) {
+      dispatch({ type: VEHICLES_LOADED_FAILED, payload: error.message });
     }
   };
 
@@ -117,6 +138,7 @@ const VehicleContextProvider = ({ children }) => {
     setShowToast,
     showUpdateVehicleModal,
     setShowUpdateVehicleModal,
+    searchVehicles
   };
 
   return (

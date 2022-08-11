@@ -22,8 +22,7 @@ const ProductPage = () => {
   useEffect(() => {
     getVehicles();
   }, []);
-  console.log(vehicles);
-
+ 
   return (
     <>
       <NavbarMenu></NavbarMenu>
@@ -33,7 +32,9 @@ const ProductPage = () => {
         {/* Sản phẩm */}
         <div className="w-[1280px] mt-5 mx-auto flex flex-wrap">
           {vehicles.map((vehicle) => {
-            return <SingleProduct key={vehicle.id} vehicle={vehicle}></SingleProduct>;
+            return (
+              <SingleProduct key={vehicle._id} vehicle={vehicle}></SingleProduct>
+            );
           })}
         </div>
       </div>

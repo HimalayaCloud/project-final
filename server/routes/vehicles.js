@@ -119,26 +119,26 @@ router.put("/:id", verifyToken, async (req, res) => {
 
   try {
     let updatedVehicle = {
-        vehicle_type,
-        vehicle_name,
-        vehicle_branch,
-        wheel_type,
-        manufacturer,
-        manufacturer_country,
-        vehicle_model,
-        manufacturer_year,
-        engine_capacity,
-        bucket_capacity,
-        vehicle_tonnage,
-        hours_worked,
-        price,
-        vehicle_status,
-        description,
-        picture,
-        driver_link,
+      vehicle_type,
+      vehicle_name,
+      vehicle_branch,
+      wheel_type,
+      manufacturer,
+      manufacturer_country,
+      vehicle_model,
+      manufacturer_year,
+      engine_capacity,
+      bucket_capacity,
+      vehicle_tonnage,
+      hours_worked,
+      price,
+      vehicle_status,
+      description,
+      picture,
+      driver_link,
     };
 
-    const vehicleUpdateCondition = { _id: req.params.id};
+    const vehicleUpdateCondition = { _id: req.params.id };
     updatedVehicle = await Vehicles.findOneAndUpdate(
       vehicleUpdateCondition,
       updatedVehicle,
@@ -171,8 +171,10 @@ router.put("/:id", verifyToken, async (req, res) => {
 
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    const vehicleDeleteCondition = { _id: req.params.id};
-    const deletedVehicle = await Vehicles.findOneAndDelete(vehicleDeleteCondition);
+    const vehicleDeleteCondition = { _id: req.params.id };
+    const deletedVehicle = await Vehicles.findOneAndDelete(
+      vehicleDeleteCondition
+    );
 
     // User not authorized to delete post
     if (!deletedVehicle) {
@@ -186,6 +188,100 @@ router.delete("/:id", verifyToken, async (req, res) => {
       success: true,
       message: "vehicle deleted successfully",
       vehicle: deletedVehicle,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: " Internal Server Error" });
+  }
+});
+
+// Search Vehicle
+
+router.post("/search", verifyToken, async (req, res) => {
+  try {
+    const {
+      vehicle_name,
+      vehicle_tonnage,
+      vehicle_type,
+      bucket_capacity,
+      price_range,
+    } = req.body;
+
+    const vehicles = await Vehicles.find();
+
+    const searchData = vehicles.filter((vehicle) => {
+      const vehicleSeachName = vehicle_name
+        .toLocaleLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d")
+        .replace(/Đ/g, "D");
+      const vehicleName = vehicle.vehicle_name
+        .toLocaleLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d")
+        .replace(/Đ/g, "D");
+
+      if (
+        vehicle_name === "" &&
+        vehicle_tonnage === "" &&
+        vehicle_type === "" &&
+        bucket_capacity === "" &&
+        price_range === ""
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle_tonnage === "" &&
+        vehicle_type === "" &&
+        bucket_capacity === "" &&
+        price_range === ""
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle.vehicle_tonnage === vehicle_tonnage
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle.vehicle_tonnage === vehicle_tonnage &&
+        vehicle.vehicle_type === vehicle_type
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle.vehicle_tonnage === vehicle_tonnage &&
+        vehicle.vehicle_type === vehicle_type &&
+        vehicle.bucket_capacity === bucket_capacity
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle.vehicle_tonnage === vehicle_tonnage &&
+        vehicle.vehicle_type === vehicle_type &&
+        vehicle.bucket_capacity === bucket_capacity &&
+        price_range.minPrice <= vehicle.price <= price_range.maxPrice
+      ) {
+        return vehicle;
+      } else if (
+        vehicle_name === "" &&
+        vehicle_tonnage === "" &&
+        bucket_capacity === "" &&
+        price_range === "" &&
+        vehicle.vehicle_type === vehicle_type
+      ) {
+        return vehicle;
+      }
+    });
+
+    console.log(searchData);
+
+    res.json({
+      success: true,
+      message: "search successful",
+      vehicles: searchData,
     });
   } catch (error) {
     console.log(error);

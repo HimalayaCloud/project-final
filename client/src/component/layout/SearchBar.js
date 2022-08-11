@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import MultiRangeSlider from "multi-range-slider-react";
 import arrowRight from "../../assets/arrow-right.svg";
+import { VehiclesContext } from "../../contexts/VehicleContext";
 const SearchBar = () => {
   const [showMinMax, setShowMinMax] = useState(false);
+  const { searchVehicles } = useContext(VehiclesContext)
 
   // window.onclick = (e) => {
   //   if (!e.target.matches(".dropdown-btn")) {
@@ -135,9 +137,10 @@ const SearchBar = () => {
     setSearchInfo({ ...searchInfo, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(searchInfo);
+    const response = await searchVehicles(searchInfo)
+    console.log(response);
   };
   return (
     <div className="w-[1280px] h-[134px] mx-auto rounded flex items-center bg-[#eb6864]">
