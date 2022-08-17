@@ -53,7 +53,7 @@ const LoginForm = () => {
         <Form.Group>
           <Form.Control
             type="text"
-            placeholder="Username"
+            placeholder="Tên Đăng Nhập"
             name="username"
             required
             value={username}
@@ -63,7 +63,7 @@ const LoginForm = () => {
         <Form.Group>
           <Form.Control
             type="password"
-            placeholder="Pasword"
+            placeholder="Mật Khẩu"
             name="password"
             required
             value={password}
@@ -71,14 +71,14 @@ const LoginForm = () => {
           ></Form.Control>
         </Form.Group>
         <Button variant="success" type="submit">
-          Login
+          Đăng Nhập
         </Button>
       </Form>
       <p>
-        Don't have an account?
+        Chưa có tài khoản?
         <Link to="/register">
           <Button variant="info" size="sm" className="ml-2">
-            Register
+            Đăng Ký
           </Button>
         </Link>
       </p>

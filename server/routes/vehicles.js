@@ -224,53 +224,29 @@ router.post("/search", verifyToken, async (req, res) => {
         .replace(/Đ/g, "D");
 
       if (
-        vehicle_name === "" &&
-        vehicle_tonnage === "" &&
-        vehicle_type === "" &&
-        bucket_capacity === "" &&
-        price_range === ""
+        vehicle_name == "" &&
+        vehicle_tonnage == "" &&
+        vehicle_type == "" &&
+        bucket_capacity == "" &&
+        price_range == ""
       ) {
         return vehicle;
       } else if (
         vehicleName.includes(vehicleSeachName) &&
-        vehicle_tonnage === "" &&
-        vehicle_type === "" &&
-        bucket_capacity === "" &&
-        price_range === ""
+        vehicle_tonnage == "" &&
+        vehicle_type == "" &&
+        bucket_capacity == ""
       ) {
         return vehicle;
       } else if (
         vehicleName.includes(vehicleSeachName) &&
-        vehicle.vehicle_tonnage === vehicle_tonnage
+        vehicle.vehicle_tonnage == vehicle_tonnage
       ) {
         return vehicle;
       } else if (
         vehicleName.includes(vehicleSeachName) &&
-        vehicle.vehicle_tonnage === vehicle_tonnage &&
-        vehicle.vehicle_type === vehicle_type
-      ) {
-        return vehicle;
-      } else if (
-        vehicleName.includes(vehicleSeachName) &&
-        vehicle.vehicle_tonnage === vehicle_tonnage &&
-        vehicle.vehicle_type === vehicle_type &&
-        vehicle.bucket_capacity === bucket_capacity
-      ) {
-        return vehicle;
-      } else if (
-        vehicleName.includes(vehicleSeachName) &&
-        vehicle.vehicle_tonnage === vehicle_tonnage &&
-        vehicle.vehicle_type === vehicle_type &&
-        vehicle.bucket_capacity === bucket_capacity &&
-        price_range.minPrice <= vehicle.price <= price_range.maxPrice
-      ) {
-        return vehicle;
-      } else if (
-        vehicle_name === "" &&
-        vehicle_tonnage === "" &&
-        bucket_capacity === "" &&
-        price_range === "" &&
-        vehicle.vehicle_type === vehicle_type
+        vehicle.vehicle_tonnage == vehicle_tonnage &&
+        vehicle.vehicle_type == vehicle_type
       ) {
         return vehicle;
       }
