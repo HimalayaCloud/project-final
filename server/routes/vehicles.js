@@ -207,7 +207,9 @@ router.post("/search", verifyToken, async (req, res) => {
       price_range,
     } = req.body;
 
-    const vehicles = await Vehicles.find();
+    const vehicles = await Vehicles.find({
+      price: { $gte: price_range.minPrice, $lte: price_range.maxPrice },
+    });
 
     const searchData = vehicles.filter((vehicle) => {
       const vehicleSeachName = vehicle_name
@@ -227,8 +229,7 @@ router.post("/search", verifyToken, async (req, res) => {
         vehicle_name == "" &&
         vehicle_tonnage == "" &&
         vehicle_type == "" &&
-        bucket_capacity == "" &&
-        price_range == ""
+        bucket_capacity == ""
       ) {
         return vehicle;
       } else if (
@@ -240,13 +241,51 @@ router.post("/search", verifyToken, async (req, res) => {
         return vehicle;
       } else if (
         vehicleName.includes(vehicleSeachName) &&
-        vehicle.vehicle_tonnage == vehicle_tonnage
+        vehicle.vehicle_tonnage == vehicle_tonnage &&
+        vehicle_type == "" &&
+        bucket_capacity == ""
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle_tonnage == "" &&
+        vehicle.vehicle_type == vehicle_type &&
+        bucket_capacity == ""
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle_tonnage == "" &&
+        vehicle_type == "" &&
+        vehicle.bucket_capacity == bucket_capacity
       ) {
         return vehicle;
       } else if (
         vehicleName.includes(vehicleSeachName) &&
         vehicle.vehicle_tonnage == vehicle_tonnage &&
-        vehicle.vehicle_type == vehicle_type
+        vehicle.vehicle_type == vehicle_type &&
+        bucket_capacity == ""
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle.vehicle_tonnage == vehicle_tonnage &&
+        vehicle_type == "" &&
+        vehicle.bucket_capacity == bucket_capacity
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle.vehicle_tonnage == vehicle_tonnage &&
+        vehicle.vehicle_type == vehicle_type &&
+        vehicle.bucket_capacity == bucket_capacity
+      ) {
+        return vehicle;
+      } else if (
+        vehicleName.includes(vehicleSeachName) &&
+        vehicle_tonnage == "" &&
+        vehicle.vehicle_type == vehicle_type &&
+        vehicle.bucket_capacity == bucket_capacity
       ) {
         return vehicle;
       }
