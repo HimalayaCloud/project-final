@@ -14,3 +14,4 @@ export const ADD_VEHICLE = 'ADD_VEHICLE';
 export const DELETE_VEHICLE = 'DELETE_VEHICLE';
 export const UPDATE_VEHICLE = 'UPDATE_VEHICLE';
 export const FIND_VEHICLE = 'FIND_VEHICLE';
+export const SEARCH_VEHICLE = 'SEARCH_VEHICLE';

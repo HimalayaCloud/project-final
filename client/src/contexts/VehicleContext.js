@@ -8,6 +8,7 @@ import {
   DELETE_VEHICLE,
   UPDATE_VEHICLE,
   FIND_VEHICLE,
+  SEARCH_VEHICLE,
 } from "./constants";
 import axios from "axios";
 
@@ -112,12 +113,12 @@ const VehicleContextProvider = ({ children }) => {
   const searchVehicles = async (searchInfo) => {
     try {
       const response = await axios.post(`${apiUrl}/vehicles/search`, searchInfo);
-      // if (response.data.success) {
-      //   dispatch({
-      //     type: VEHICLES_LOADED_SUCCESS,
-      //     payload: response.data.vehicles,
-      //   });
-      // }
+      if (response.data.success) {
+        dispatch({
+          type: SEARCH_VEHICLE,
+          payload: response.data.vehicles,
+        });
+      }
     } catch (error) {
       dispatch({ type: VEHICLES_LOADED_FAILED, payload: error.message });
     }

@@ -25,7 +25,7 @@ const HomePage = () => {
   useEffect(() => {
     getVehicles();
   }, []);
-  console.log(vehicles);
+  // console.log(vehicles);
 
   return (
     <>
