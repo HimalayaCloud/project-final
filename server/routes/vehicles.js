@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../middleware/auth");
+const authRole = require("../middleware/auth");
 const Vehicles = require("../models/ConstructionVehicle");
+const { uploadFile } = require("../s3");
+const { makeid } = require("./utils");
 
 //  @route POST api/posts
 //  @desc Create a new post
@@ -24,16 +27,28 @@ router.post("/", verifyToken, async (req, res) => {
     price,
     vehicle_status,
     description,
-    picture,
     driver_link,
   } = req.body;
 
+  // console.log(req.files.picture, " picture uploaded!!!!!!!!");
+  // console.log(Buffer.from(req.files.picture.data).toString('base64'), "Buffer image base64");
+
   // simple validation
-  if (!vehicle_type) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Vehicle Type is required" });
+  if (!vehicle_type || !req.files) {
+    return res.status(400).json({
+      success: false,
+      message: "Vehicle Type and Picture is required",
+    });
   }
+
+  const pictureId = makeid(10);
+  const resultUpload = await uploadFile({
+    ...req.files.picture,
+    path: req.files.picture.data,
+    id: pictureId,
+  });
+
+  const pictureUrl = resultUpload.Location;
 
   try {
     const newVehicle = new Vehicles({
@@ -52,7 +67,8 @@ router.post("/", verifyToken, async (req, res) => {
       price,
       vehicle_status,
       description,
-      picture,
+      pictureUrl,
+      pictureId,
       driver_link,
       user: req.userId,
     });
@@ -117,6 +133,16 @@ router.put("/:id", verifyToken, async (req, res) => {
       .json({ success: false, message: "Vehicle Type is required" });
   }
 
+  const pictureId = makeid(10);
+
+  const resultUpload = await uploadFile({
+    ...req.files.picture,
+    path: req.files.picture.data,
+    id: pictureId,
+  });
+
+  const pictureUrl = resultUpload.Location;
+
   try {
     let updatedVehicle = {
       vehicle_type,
@@ -134,7 +160,7 @@ router.put("/:id", verifyToken, async (req, res) => {
       price,
       vehicle_status,
       description,
-      picture,
+      pictureUrl,
       driver_link,
     };
 

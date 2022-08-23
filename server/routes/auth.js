@@ -4,21 +4,26 @@ const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../middleware/auth");
 const User = require("../models/User");
-
 // @route Get api/auth
 // @desc check if user is authenticated
 // @access Public
-router.get("/", verifyToken , async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select('-password')
-    if(!user){
-      return res.status(400).json({success: false, message: "User not found"});
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
     }
     // all good
-    res.json({success: true, message: "User authenticated", user: user.username});
+    res.json({
+      success: true,
+      message: "User authenticated",
+      user: { name: user.username, role: user.role },
+    });
   } catch (error) {
-    console.log(error)
-    res.status(500).json({success: false, message:" Internal Server Error"})
+    console.log(error);
+    res.status(500).json({ success: false, message: " Internal Server Error" });
   }
 });
 
@@ -27,7 +32,7 @@ router.get("/", verifyToken , async (req, res) => {
 //  @access Public
 
 router.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
 
   // simple validation
   if (!username || !password)
@@ -47,6 +52,7 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       username: username,
       password: harshedPassword,
+      role: role,
     });
     await newUser.save();
 
@@ -62,8 +68,8 @@ router.post("/register", async (req, res) => {
       accessToken: accessToken,
     });
   } catch (error) {
-    console.log(error)
-    res.status(500).json({success: false, message:" Internal Server Error"})
+    console.log(error);
+    res.status(500).json({ success: false, message: " Internal Server Error" });
   }
 });
 
@@ -110,10 +116,9 @@ router.post("/login", async (req, res) => {
       message: "User login successfully",
       accessToken: accessToken,
     });
-
   } catch (error) {
-    console.log(error)
-    res.status(500).json({success: false, message:" Internal Server Error"})
+    console.log(error);
+    res.status(500).json({ success: false, message: " Internal Server Error" });
   }
 });
 

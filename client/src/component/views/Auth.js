@@ -32,10 +32,12 @@ const Auth = ({ authRoute }) => {
       <div className="landing">
         <div className="dark-overlay">
           <div className="landing-inner">
-            <h1>Đăng Nhập</h1>
-            {/* <h4>Keep track of what you are learning</h4> */}
-            {body}
-          </div>
+            {/* <div className="login-form"> */}
+              <h1>{authRoute === "login" ? "Đăng Nhập" : "Đăng Ký"}</h1>
+              {/* <h4>Keep track of what you are learning</h4> */}
+              {body}
+            </div>
+          {/* </div> */}
         </div>
       </div>
     </Fragment>

@@ -9,6 +9,7 @@ import {
   UPDATE_VEHICLE,
   FIND_VEHICLE,
   SEARCH_VEHICLE,
+  VEHICLES_LOADING,
 } from "./constants";
 import axios from "axios";
 
@@ -22,6 +23,7 @@ const VehicleContextProvider = ({ children }) => {
     vehiclesLoading: true,
   });
 
+  const [refetch, setRefetch] = useState(false);
   const [showAddVehicleModal, setShowAddVehicleModal] = useState(false);
   const [showUpdateVehicleModal, setShowUpdateVehicleModal] = useState(false);
   const [showToast, setShowToast] = useState({
@@ -50,10 +52,13 @@ const VehicleContextProvider = ({ children }) => {
 
   const addVehicle = async (newVehicle) => {
     try {
-      const response = await axios.post(`${apiUrl}/vehicles`, newVehicle);
+      const response = await axios.post(`${apiUrl}/vehicles`, newVehicle, {
+        headers: { "content-type": "multipart/form-data" },
+      });
       if (response.data.success) {
         dispatch({ type: ADD_VEHICLE, payload: response.data.vehicle_info });
         console.log(response);
+        setRefetch(!refetch);
         return response.data;
       }
     } catch (error) {
@@ -92,13 +97,18 @@ const VehicleContextProvider = ({ children }) => {
   // Update Post
   const updateVehicle = async (updatedVehicle) => {
     try {
+      dispatch({ type: VEHICLES_LOADING });
       const response = await axios.put(
         `${apiUrl}/vehicles/${updatedVehicle._id}`,
-        updatedVehicle
+        updatedVehicle,
+        {
+          headers: { "content-type": "multipart/form-data" },
+        }
       );
       if (response.data.success) {
         dispatch({ type: UPDATE_VEHICLE, payload: response.data.vehicle });
         console.log(response);
+        setRefetch(!refetch);
         return response.data;
       }
     } catch (error) {
@@ -112,7 +122,10 @@ const VehicleContextProvider = ({ children }) => {
 
   const searchVehicles = async (searchInfo) => {
     try {
-      const response = await axios.post(`${apiUrl}/vehicles/search`, searchInfo);
+      const response = await axios.post(
+        `${apiUrl}/vehicles/search`,
+        searchInfo
+      );
       if (response.data.success) {
         dispatch({
           type: SEARCH_VEHICLE,
@@ -135,11 +148,12 @@ const VehicleContextProvider = ({ children }) => {
     deleteVehicle,
     updateVehicle,
     findVehicle,
+    refetch,
     showToast,
     setShowToast,
     showUpdateVehicleModal,
     setShowUpdateVehicleModal,
-    searchVehicles
+    searchVehicles,
   };
 
   return (

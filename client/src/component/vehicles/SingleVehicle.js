@@ -4,19 +4,17 @@ import ActionButtons from "./ActionButtons";
 
 const SingleVehicle = ({
   index,
-  vehicle: {
-    _id,
-    vehicle_name,
-    price,
-    picture,
-    driver_link,
-  },
+  vehicle: { _id, vehicle_name, price, pictureUrl, driver_link },
 }) => {
   return (
     <tr>
       <td>{index + 1}</td>
       <td>
-        <img width={150} src={picture} alt="ảnh xe" />
+        <img
+          style={{ maxHeight: "100px", width: "150px", objectFit: "fill" }}
+          src={pictureUrl}
+          alt="ảnh xe"
+        />
       </td>
       <td>{vehicle_name}</td>
       <td>{price} triệu VNĐ</td>
@@ -24,7 +22,7 @@ const SingleVehicle = ({
         <a href={driver_link}>{driver_link}</a>
       </td>
       <td>
-        <ActionButtons _id={_id} ></ActionButtons>
+        <ActionButtons _id={_id}></ActionButtons>
       </td>
     </tr>
   );

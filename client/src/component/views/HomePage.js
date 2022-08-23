@@ -8,14 +8,17 @@ import { Table, Toast } from "react-bootstrap";
 import UpdateVehicleModal from "../vehicles/UpdateVehicleModal";
 import SingleVehicle from "../vehicles/SingleVehicle";
 import SearchBar from "../layout/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const {
-    authState: { user: username },
+    authState: { user },
   } = useContext(AuthContext);
+
+  const navigate = useNavigate();
   // Post Context
   const {
-    vehicleState: { vehicle, vehicles },
+    vehicleState: { vehicle, vehicles, vehiclesLoading },
     getVehicles,
     setShowAddVehicleModal,
     showToast: { show, message, type },
@@ -23,6 +26,9 @@ const HomePage = () => {
   } = useContext(VehiclesContext);
 
   useEffect(() => {
+    if (user.role === "user") {
+      navigate('/trang-san-pham')
+    }
     getVehicles();
   }, []);
   // console.log(vehicles);
@@ -32,7 +38,7 @@ const HomePage = () => {
       <NavbarMenu></NavbarMenu>
       <Toast
         show={show}
-        style={{ position: "fixed", top: "10%", right: "40%", zIndex:"100" }}
+        style={{ position: "fixed", top: "10%", right: "40%", zIndex: "100" }}
         className={`bg-${type} text-white`}
         onClose={() => setShowToast({ show: false, message: "", type: null })}
         delay={3000}
@@ -66,6 +72,7 @@ const HomePage = () => {
                 <th style={{ width: "15%" }}>Chỉnh Sửa</th>
               </tr>
             </thead>
+            {/* {!vehiclesLoading ? ( */}
             <tbody>
               {vehicles.map((vehicle, index) => {
                 return (
@@ -77,6 +84,7 @@ const HomePage = () => {
                 );
               })}
             </tbody>
+            {/* ) : null} */}
           </Table>
         </div>
       </div>

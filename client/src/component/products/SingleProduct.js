@@ -7,7 +7,7 @@ const SingleProduct = ({ vehicle }) => {
         {/* img */}
         <div>
           <img
-            src={vehicle.picture}
+            src={vehicle.pictureUrl}
             className="w-full h-[200px] rounded-t"
             alt="ảnh máy"
           ></img>
@@ -30,7 +30,7 @@ const SingleProduct = ({ vehicle }) => {
           {vehicle.bucket_capacity ? (
             <div>
               <p>
-                Dung tích gầu: <span>{vehicle.engine_capacity}</span>
+                Dung tích gầu: <span>{vehicle.bucket_capacity}</span>
               </p>
             </div>
           ) : (

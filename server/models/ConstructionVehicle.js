@@ -50,13 +50,16 @@ const ConstructionVehicle = new Schema({
   },
   vehicle_status: {
     type: String,
-    enum: ['Đang Ở Nước Ngoài', 'Đang Ở Việt Nam', 'Đã Bán'],
+    enum: ["Đang Ở Nước Ngoài", "Đang Ở Việt Nam", "Đã Bán"],
     required: true,
   },
   description: {
     type: String,
   },
-  picture: {
+  pictureUrl: {
+    type: String,
+  },
+  pictureId: {
     type: String,
   },
   driver_link: {

@@ -30,7 +30,8 @@ const AddVehicleModal = () => {
     price: "",
     vehicle_status: "",
     description: "",
-    picture: "",
+    picture: null,
+    picturePath: "",
     driver_link: "",
   });
 
@@ -57,20 +58,27 @@ const AddVehicleModal = () => {
     setNewVehicle({ ...newVehicle, [event.target.name]: event.target.value });
   };
 
-  const vehicleName = `${vehicle_type} ${vehicle_branch} ${wheel_type} ${manufacturer} ${vehicle_model} năm ${manufacturer_year} nhập từ ${manufacturer_country}`;
-  useEffect(() => {
-    setNewVehicle({ ...newVehicle, vehicle_name: vehicleName });
-  },[vehicleName])
-  
   const closeDialog = () => {
     resetAddVehicleData();
   };
   // console.log(newVehicle)
 
+  const fileSelected = (event) => {
+    const file = event.target.files[0];
+    console.log(file, "aaaaaaaaa");
+    var path = (window.URL || window.webkitURL).createObjectURL(file);
+    console.log("path", path);
+    setNewVehicle({ ...newVehicle, picture: file, picturePath: path });
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
-    setNewVehicle({ ...newVehicle, vehicle_name: vehicleName });
-    const { success, message } = await addVehicle(newVehicle);
+    const vehicleName = `${vehicle_type} ${vehicle_branch} ${wheel_type} ${manufacturer} ${vehicle_model} năm ${manufacturer_year} nhập từ ${manufacturer_country}`;
+    console.log(newVehicle, vehicleName, "vehicle!!!!!!!!");
+    const { success, message } = await addVehicle({
+      ...newVehicle,
+      vehicle_name: vehicleName,
+    });
     resetAddVehicleData();
     setShowToast({
       show: true,
@@ -107,7 +115,7 @@ const AddVehicleModal = () => {
           <Modal.Title>Thêm sản phẩm mới</Modal.Title>
         </Modal.Header>
         <Form onSubmit={onSubmit}>
-        <Modal.Body>
+          <Modal.Body>
             <Form.Group className="mb-2 flex align-center">
               <Form.Label className="mb-0 w-[37%]">Loại Máy :</Form.Label>
               <Form.Control
@@ -241,7 +249,9 @@ const AddVehicleModal = () => {
             </Form.Group>
             {vehicle_type === "Máy Xúc" ? (
               <Form.Group className="mb-2 flex align-center">
-                <Form.Label className="mb-0 w-[37%]">Dung Tích Gầu :</Form.Label>
+                <Form.Label className="mb-0 w-[37%]">
+                  Dung Tích Gầu :
+                </Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="Dung Tích Gầu"
@@ -288,7 +298,7 @@ const AddVehicleModal = () => {
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2 flex align-center">
-            <Form.Label className="mb-0 w-[37%]">Tình Trạng :</Form.Label>
+              <Form.Label className="mb-0 w-[37%]">Tình Trạng :</Form.Label>
               <Form.Control
                 as="select"
                 name="vehicle_status"
@@ -307,11 +317,10 @@ const AddVehicleModal = () => {
             <Form.Group className="mb-2 flex align-center">
               <Form.Label className="mb-0 w-[37%]">Link Ảnh :</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Link Ảnh"
+                type="file"
+                accept="image/*"
                 name="picture"
-                value={picture}
-                onChange={onChangeNewVehicleForm}
+                onChange={fileSelected}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2 flex align-center">

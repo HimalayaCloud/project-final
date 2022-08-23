@@ -1,4 +1,4 @@
-import { createContext, useReducer , useEffect} from "react";
+import { createContext, useReducer, useEffect } from "react";
 import { authReducer } from "../reducers/AuthReducer";
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from "./constants";
 import axios from "axios";
@@ -39,9 +39,9 @@ const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    loadUser()
-  },[])
-  
+    loadUser();
+  }, []);
+
   //   Login
   const loginUser = async (userForm) => {
     try {
@@ -91,15 +91,15 @@ const AuthContextProvider = ({ children }) => {
 
   // Logout
   const logoutUser = () => {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
     dispatch({
       type: "SET_AUTH",
       payload: { isAuthenticated: false, user: null },
     });
-  }
+  };
 
   //   Context Data
-  const authContextData = { loginUser, authState , registerUser, logoutUser };
+  const authContextData = { loginUser, authState, registerUser, logoutUser };
 
   //   return provider
 

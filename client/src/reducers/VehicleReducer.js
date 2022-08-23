@@ -4,6 +4,7 @@ import {
   FIND_VEHICLE,
   VEHICLES_LOADED_FAILED,
   VEHICLES_LOADED_SUCCESS,
+  VEHICLES_LOADING,
   UPDATE_VEHICLE,
   SEARCH_VEHICLE,
 } from "../contexts/constants";
@@ -23,6 +24,11 @@ export const vehicleReducer = (state, action) => {
         vehicles: [],
         vehiclesLoading: false,
       };
+    case VEHICLES_LOADING:
+      return {
+        ...state,
+        vehiclesLoading: true,
+      };
     case ADD_VEHICLE:
       return {
         ...state,
@@ -41,6 +47,7 @@ export const vehicleReducer = (state, action) => {
     case UPDATE_VEHICLE:
       const newVehicles = state.vehicles.map((vehicle) => {
         if (vehicle._id === payload._id) {
+          console.log(payload);
           return payload;
         } else {
           return vehicle;
@@ -50,6 +57,7 @@ export const vehicleReducer = (state, action) => {
       return {
         ...state,
         vehicles: newVehicles,
+        vehiclesLoading: false,
       };
     case SEARCH_VEHICLE:
       // const searchResult = state.vehicles.map((vehicle) => {

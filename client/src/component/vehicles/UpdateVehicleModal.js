@@ -36,7 +36,6 @@ const UpdateVehicleModal = () => {
     price,
     vehicle_status,
     description,
-    picture,
     driver_link,
   } = updatedVehicle;
 
@@ -47,21 +46,26 @@ const UpdateVehicleModal = () => {
     });
   };
 
-  const vehicleName = `${vehicle_type} ${vehicle_branch} ${wheel_type} ${manufacturer} ${vehicle_model} năm ${manufacturer_year} nhập từ ${manufacturer_country}`;
-
-  useEffect(() => {
-    setUpdatedVehicle({ ...updatedVehicle, vehicle_name: vehicleName });
-  }, [vehicleName]);
-
   const closeDialog = () => {
     setUpdatedVehicle(vehicle);
     setShowUpdateVehicleModal(false);
   };
 
+  const fileSelected = (event) => {
+    const file = event.target.files[0];
+    console.log(file, "aaaaaaaaa");
+    var path = (window.URL || window.webkitURL).createObjectURL(file);
+    console.log("path", path);
+    setUpdatedVehicle({ ...updatedVehicle, picture: file, picturePath: path });
+  };
+  
   const onSubmit = async (event) => {
     event.preventDefault();
-    setUpdatedVehicle({ ...updatedVehicle, vehicle_name: vehicleName });
-    const { success, message } = await updateVehicle(updatedVehicle);
+    const vehicleName = `${vehicle_type} ${vehicle_branch} ${wheel_type} ${manufacturer} ${vehicle_model} năm ${manufacturer_year} nhập từ ${manufacturer_country}`;
+    const { success, message } = await updateVehicle({
+      ...updatedVehicle,
+      vehicle_name: vehicleName,
+    });
     setShowUpdateVehicleModal(false);
     setShowToast({
       show: true,
@@ -211,7 +215,9 @@ const UpdateVehicleModal = () => {
             </Form.Group>
             {vehicle_type === "Máy Xúc" ? (
               <Form.Group className="mb-2 flex align-center">
-                <Form.Label className="mb-0 w-[37%]">Dung Tích Gầu :</Form.Label>
+                <Form.Label className="mb-0 w-[37%]">
+                  Dung Tích Gầu :
+                </Form.Label>
                 <Form.Control
                   type="number"
                   placeholder="Dung Tích Gầu"
@@ -258,7 +264,7 @@ const UpdateVehicleModal = () => {
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2 flex align-center">
-            <Form.Label className="mb-0 w-[37%]">Tình Trạng :</Form.Label>
+              <Form.Label className="mb-0 w-[37%]">Tình Trạng :</Form.Label>
               <Form.Control
                 as="select"
                 name="vehicle_status"
@@ -277,11 +283,10 @@ const UpdateVehicleModal = () => {
             <Form.Group className="mb-2 flex align-center">
               <Form.Label className="mb-0 w-[37%]">Link Ảnh :</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Link Ảnh"
+                type="file"
+                accept="image/*"
                 name="picture"
-                value={picture}
-                onChange={onChangeUpdateVehicleForm}
+                onChange={fileSelected}
               ></Form.Control>
             </Form.Group>
             <Form.Group className="mb-2 flex align-center">
