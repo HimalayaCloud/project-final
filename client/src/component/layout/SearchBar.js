@@ -5,7 +5,7 @@ import arrowRight from "../../assets/arrow-right.svg";
 import { VehiclesContext } from "../../contexts/VehicleContext";
 const SearchBar = () => {
   const [showMinMax, setShowMinMax] = useState(false);
-  const { searchVehicles } = useContext(VehiclesContext)
+  const { searchVehicles } = useContext(VehiclesContext);
 
   // window.onclick = (e) => {
   //   if (!e.target.matches(".dropdown-btn")) {
@@ -139,7 +139,7 @@ const SearchBar = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const response = await searchVehicles(searchInfo)
+    const response = await searchVehicles(searchInfo);
     console.log(response);
   };
   return (
@@ -172,9 +172,7 @@ const SearchBar = () => {
                 value={vehicle_type}
                 onChange={onChangeSearchVehicleForm}
               >
-                <option hidden value="" disabled>
-                  Tất cả loại máy
-                </option>
+                <option value="">Tất cả loại máy</option>
                 <option value="Máy Xúc">Máy Xúc</option>
                 <option value="Máy Lu">Máy Lu</option>
                 <option value="Máy Ủi">Máy Ủi</option>

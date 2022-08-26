@@ -9,7 +9,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const NavbarMenu = () => {
   const {
-    authState: { user: username },
+    authState: { user },
     logoutUser,
   } = useContext(AuthContext);
 
@@ -33,13 +33,24 @@ const NavbarMenu = () => {
           style={{ justifyContent: "space-between" }}
         >
           <Nav className="mr-auto">
-            <Nav.Link
+            {user.role === "admin" ? (
+              <Nav.Link
+                className="font-weight-bolder text-white"
+                to="/trang-chu"
+                as={Link}
+              >
+                Quản Lý Sản Phẩm
+              </Nav.Link>
+            ) : (
+              ""
+            )}
+            {/* <Nav.Link
               className="font-weight-bolder text-white"
               to="/trang-chu"
               as={Link}
             >
               Quản Lý Sản Phẩm
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link
               className="font-weight-bolder text-white"
               to="/trang-san-pham"
@@ -50,7 +61,7 @@ const NavbarMenu = () => {
           </Nav>
           <Nav className="align-center">
             <Nav.Link className="font-weight-bolder text-white" disabled>
-              Welcome {username}
+              Welcome {user.name}
             </Nav.Link>
             <Button
               variant="secondary"
@@ -64,7 +75,7 @@ const NavbarMenu = () => {
                 height={32}
                 className="mr-2"
               ></img>
-              Logout
+              Đăng Xuất
             </Button>
           </Nav>
         </NavBar.Collapse>

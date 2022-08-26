@@ -54,7 +54,7 @@ const RegisterForm = () => {
     <Fragment>
       <Form onSubmit={register}>
       <AlertMessage info={alert}/>
-        <Form.Group>
+        <Form.Group className="mt-[20px] mb-[10px]">
           <Form.Control
             type="text"
             placeholder="Tên Đăng Nhập"
@@ -64,7 +64,7 @@ const RegisterForm = () => {
             onChange={onChangeRegisterForm}
           ></Form.Control>
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mb-[10px]">
           <Form.Control
             type="password"
             placeholder="Mật Khẩu"
@@ -74,7 +74,7 @@ const RegisterForm = () => {
             onChange={onChangeRegisterForm}
           ></Form.Control>
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="mb-[10px]">
           <Form.Control
             type="password"
             placeholder="Nhập Lại Mật Khẩu"
@@ -84,7 +84,7 @@ const RegisterForm = () => {
             onChange={onChangeRegisterForm}
           ></Form.Control>
         </Form.Group>
-        <Button variant="success" type="submit">
+        <Button className="mb-[10px]" variant="success" type="submit">
           Đăng Ký
         </Button>
       </Form>

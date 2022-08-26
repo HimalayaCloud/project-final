@@ -138,3 +138,7 @@ button.post-button.btn:active {
 .multi-range-slider .bar-left {
   box-shadow: none !important;
 }
+
+.login-form{
+  border: 1px solid white;
+}
