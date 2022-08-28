@@ -60,14 +60,11 @@ export const vehicleReducer = (state, action) => {
         vehiclesLoading: false,
       };
     case SEARCH_VEHICLE:
-      // const searchResult = state.vehicles.map((vehicle) => {
-      //   payload.map((searchVehicle) => {
-      //     if (searchVehicle._id === vehicle._id) {
-      //       return searchVehicle;
-      //     }
-      //   });
-      // });
-      // console.log(searchResult)
+      return {
+        ...state,
+        vehicles: payload,
+      };
+    case SEARCH_VEHICLE:
       return {
         ...state,
         vehicles: payload,

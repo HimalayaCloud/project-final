@@ -44,19 +44,19 @@ const NavbarMenu = () => {
             ) : (
               ""
             )}
-            {/* <Nav.Link
-              className="font-weight-bolder text-white"
-              to="/trang-chu"
-              as={Link}
-            >
-              Quản Lý Sản Phẩm
-            </Nav.Link> */}
             <Nav.Link
               className="font-weight-bolder text-white"
               to="/trang-san-pham"
               as={Link}
             >
               Trang Sản Phẩm
+            </Nav.Link>
+            <Nav.Link
+              className="font-weight-bolder text-white"
+              to="/trang-bao-gia"
+              as={Link}
+            >
+              Trang Báo Giá
             </Nav.Link>
           </Nav>
           <Nav className="align-center">

@@ -137,6 +137,19 @@ const VehicleContextProvider = ({ children }) => {
     }
   };
 
+  // Add Order
+
+  const createOrder = async (orderInfo) => {
+    try {
+      const response = await axios.post(`${apiUrl}/orders`, orderInfo);
+      if (response.data.success) {
+        console.log("Create Order Success");
+      }
+    } catch (error) {
+      console.log("Create Order Failure");
+    }
+  };
+
   //   Post context data
 
   const vehicleContextData = {
@@ -149,7 +162,9 @@ const VehicleContextProvider = ({ children }) => {
     updateVehicle,
     findVehicle,
     refetch,
+    setRefetch,
     showToast,
+    createOrder,
     setShowToast,
     showUpdateVehicleModal,
     setShowUpdateVehicleModal,

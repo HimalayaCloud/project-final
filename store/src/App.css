@@ -1,6 +1,5 @@
-
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
@@ -37,3 +36,33 @@
     transform: rotate(360deg);
   }
 }
+
+.vehicle-detail-title {
+  color: #ea8500;
+  margin: 20px 0 0;
+  padding: 8px 20px;
+  background-color: #ffefdb;
+  font-size: 21px;
+  border: 1px solid #ebebeb;
+  border-left: 0;
+  font-weight: 700;
+  border-radius: 0 10px 10px 0;
+  display: flex;
+  align-items: center;
+  min-height: 68px;
+  margin-bottom: 10px;
+}
+
+.info-hotline {
+  padding: 9px 15px;
+  width: 100%;
+  float: left;
+  background-image: linear-gradient(to right, #f18801, #ffb44a);
+  background-image: linear-gradient(to right, #ff9000, #fdaf42);
+  border-radius: 0 10px 10px 0;
+  display: flex;
+  align-items: center;
+  margin-top: 0px;
+}
+
+

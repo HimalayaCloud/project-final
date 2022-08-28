@@ -4,7 +4,7 @@ import React from "react";
 
 const SingleVehicle = ({ vehicle }) => {
   return (
-    <div className="col-md-3">
+    <div className="col-md-3 text-center">
       <div href="#" className="card card-product-grid">
         <a href="#" className="img-wrap">
           {" "}

@@ -9,6 +9,8 @@ import HomePage from "./component/views/HomePage";
 
 import VehicleContextProvider from "./contexts/VehicleContext";
 import ProductPage from "./component/views/ProductPage";
+import OrdersPage from "./component/views/OrdersPage";
+import OrderContextProvider from "./contexts/OrderContext";
 
 function App() {
   return (
@@ -39,6 +41,17 @@ function App() {
                 exact
                 path="/trang-san-pham"
                 element={<ProductPage></ProductPage>}
+              ></Route>
+            </Route>
+            <Route exact element={<ProtectedRoute />}>
+              <Route
+                exact
+                path="/trang-bao-gia"
+                element={
+                  <OrderContextProvider>
+                    <OrdersPage></OrdersPage>
+                  </OrderContextProvider>
+                }
               ></Route>
             </Route>
           </Routes>

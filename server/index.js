@@ -10,10 +10,11 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const ImageModel = require("./models/Image");
 const { uploadFile, getFileStream } = require("./s3");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const authRouter = require("./routes/auth");
 const postRouter = require("./routes/posts");
 const vehicleRouter = require("./routes/vehicles");
+const orderRouter = require("./routes/order");
 var fileupload = require("express-fileupload");
 
 const connectDB = async () => {
@@ -50,7 +51,7 @@ app.post("/images", upload.single("image"), async (req, res) => {
   const file = req.file;
   console.log(file);
   const result = await uploadFile(file);
-  await unlinkFile(file.path)
+  await unlinkFile(file.path);
   console.log(result);
   res.send({ imagePath: `/images/${result.Key}` });
 });
@@ -58,11 +59,10 @@ app.post("/images", upload.single("image"), async (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/vehicles", vehicleRouter);
+app.use("/api/orders", orderRouter);
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log("listening on port " + PORT);
 });
-
-

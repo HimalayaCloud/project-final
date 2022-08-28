@@ -10,6 +10,8 @@ import {
   FIND_VEHICLE,
   SEARCH_VEHICLE,
   VEHICLES_LOADING,
+  ORDERS_LOADED_SUCCESS,
+  ORDERS_LOADED_FAILED,
 } from "./constants";
 import axios from "axios";
 
@@ -25,6 +27,7 @@ const VehicleContextProvider = ({ children }) => {
 
   const [refetch, setRefetch] = useState(false);
   const [showAddVehicleModal, setShowAddVehicleModal] = useState(false);
+
   const [showUpdateVehicleModal, setShowUpdateVehicleModal] = useState(false);
   const [showToast, setShowToast] = useState({
     show: false,
@@ -137,6 +140,21 @@ const VehicleContextProvider = ({ children }) => {
     }
   };
 
+  // Get Order
+
+  const getOrders = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/orders`);
+      if (response.data.success) {
+        dispatch({
+          type: ORDERS_LOADED_SUCCESS,
+          payload: response.data.orders,
+        });
+      }
+    } catch (error) {
+      dispatch({ type: ORDERS_LOADED_FAILED, payload: error.message });
+    }
+  };
   //   Post context data
 
   const vehicleContextData = {
@@ -150,6 +168,7 @@ const VehicleContextProvider = ({ children }) => {
     findVehicle,
     refetch,
     showToast,
+    getOrders,
     setShowToast,
     showUpdateVehicleModal,
     setShowUpdateVehicleModal,

@@ -84,7 +84,6 @@ const HomePage = () => {
                 );
               })}
             </tbody>
-            {/* ) : null} */}
           </Table>
         </div>
       </div>
