@@ -24,7 +24,7 @@ const Header = () => {
                 </div>
               </form>
             </div>
-            <div className="col-lg-4 col-sm-6 col-12">
+            {/* <div className="col-lg-4 col-sm-6 col-12">
               <div className="widgets-wrap float-md-right">
                 <div className="widget-header  mr-3">
                   <a href="#" className="icon icon-sm rounded-circle border">
@@ -46,7 +46,7 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -108,11 +108,6 @@ const Header = () => {
               <li className="nav-item dropdown">
                 <a className="nav-link" href="#">
                   Hình Ảnh
-                </a>
-              </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link" href="#">
-                  Trang Chủ
                 </a>
               </li>
             </ul>

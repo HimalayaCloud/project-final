@@ -8,7 +8,7 @@ const SingleOrder = ({
     customer_name,
     customer_number,
     customer_email,
-    created_at,
+    create_at,
     customer_model,
     status,
   },
@@ -23,9 +23,10 @@ const SingleOrder = ({
   const onChangeStatus = async (event) => {
     event.preventDefault();
     setOrderStatus(event.target.value);
-    const response = await changeOrderStatus(_id);
+    const response = await changeOrderStatus(_id, { status: event.target.value});
   };
-  console.log(orderStatus)
+  
+  const createdDate = new Date(create_at).toLocaleString()
 
   return (
     <tr>
@@ -33,7 +34,7 @@ const SingleOrder = ({
       <td>{customer_name}</td>
       <td>0{customer_number}</td>
       <td>{customer_email}</td>
-      <td>{created_at}</td>
+      <td>{createdDate}</td>
       <td>{customer_model}</td>
       <td>
         <select

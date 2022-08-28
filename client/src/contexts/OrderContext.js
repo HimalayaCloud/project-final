@@ -46,12 +46,13 @@ const OrderContextProvider = ({ children }) => {
   const changeOrderStatus = async (orderId, orderStatus) => {
     try {
       const response = await axios.put(`${apiUrl}/orders/${orderId}`, orderStatus)
-      if(response.data.success){
-        dispatch({
-          type: ORDERS_UPDATE_STATUS,
-          payload: response.data.orders
-        })
-      }
+      // if(response.data.success){
+      //   dispatch({
+      //     type: ORDERS_UPDATE_STATUS,
+      //     payload: response.data.orders
+      //   })
+      // }
+      console.log(response)
     } catch (error) {
       console.log("failed to update order")
     }

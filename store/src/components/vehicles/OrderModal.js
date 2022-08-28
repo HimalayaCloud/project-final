@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { VehiclesContext } from "../../contexts/VehiclesContext";
 
-const OrderModal = ({ showOrderModal, setShowOrderModal }) => {
+const OrderModal = ({ showOrderModal, setShowOrderModal, setShowToast }) => {
   const { createOrder } = useContext(VehiclesContext);
   const [order, setOrder] = useState([]);
   const { customer_name, customer_number, customer_email, customer_model } =
@@ -18,7 +18,10 @@ const OrderModal = ({ showOrderModal, setShowOrderModal }) => {
     event.preventDefault();
     console.log(order);
     const response = await createOrder(order);
-    console.log(response);
+
+    setShowToast(true)
+
+    setShowOrderModal(false)
   };
 
   return (

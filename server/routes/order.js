@@ -45,29 +45,20 @@ router.get("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const {
-    customer_name,
-    customer_number,
-    customer_email,
-    created_at,
-    customer_model,
-    orderStatus,
-  } = req.body;
+  const newStatus = req.body
+  console.log('dayne', newStatus)
   try {
-    let updatedOrderInfo = {
-      customer_name,
-      customer_number,
-      customer_email,
-      created_at,
-      customer_model,
-      orderStatus,
-    };
     const orderUpdateCondition = { _id: req.params.id };
+    const orderUpdateInfo = await Orders.findOne(orderUpdateCondition)
+    console.log('dayneee', orderUpdateInfo)
     const updatedOrder = await Orders.findOneAndUpdate(
       orderUpdateCondition,
-      updatedOrderInfo,
+      { status: newStatus.status },
       { new: true }
     );
+
+    const x = await Orders.findOne(orderUpdateCondition);
+    console.log(x, 'aaaaaaaaaaaaaa')
 
     if (!updatedOrder) {
       return res.status(401).json({

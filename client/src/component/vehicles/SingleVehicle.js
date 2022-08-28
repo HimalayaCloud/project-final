@@ -17,7 +17,7 @@ const SingleVehicle = ({
         />
       </td>
       <td>{vehicle_name}</td>
-      <td>{price} triệu VNĐ</td>
+      <td>{price < 1000 ? `${price} triệu` : `${price/1000} tỷ`}</td>
       <td>
         <a href={driver_link}>{driver_link}</a>
       </td>

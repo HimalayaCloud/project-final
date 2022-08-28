@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment, useContext, useEffect, useState } from "react";
+import { Toast } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { VehiclesContext } from "../../contexts/VehiclesContext";
 import OrderModal from "../vehicles/OrderModal";
@@ -13,10 +14,15 @@ const VehicleDetail = () => {
   const { id } = useParams();
   const [vehicleDetail, setVehicleDetail] = useState([]);
   const [showOrderModal, setShowOrderModal] = useState(false);
+  const [showToast,setShowToast] = useState(false)
 
   const openModal = () => {
     setShowOrderModal(true);
   };
+
+  const closeToast = () => {
+      setShowToast(false)
+  }
 
   useEffect(() => {
     getVehicles();
@@ -31,9 +37,22 @@ const VehicleDetail = () => {
   }, [vehicles]);
   return (
     <Fragment>
+      <Toast
+        show={showToast}
+        style={{ position: "fixed", top: "10%", right: "40%", zIndex: "100" }}
+        className={`bg-green text-white`}
+        onClose={closeToast}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>
+          <strong>Cảm ơn quý khách đã gửi thông tin, chúng tôi sẽ sớm liên hệ với quý khách!</strong>
+        </Toast.Body>
+      </Toast>
       <OrderModal
         showOrderModal={showOrderModal}
         setShowOrderModal={setShowOrderModal}
+        setShowToast={setShowToast}
       ></OrderModal>
       <div className="container pt-10">
         <div className="row">
