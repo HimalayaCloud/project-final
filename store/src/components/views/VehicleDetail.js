@@ -1,28 +1,36 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { Toast } from "react-bootstrap";
+import { Button, Toast } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { VehiclesContext } from "../../contexts/VehiclesContext";
+import { CartContext } from "../../contexts/CartContext";
 import OrderModal from "../vehicles/OrderModal";
+import MinusIcon from "../icons/MinusIcon";
+import PlusIcon from "../icons/PlusIcon";
+import Header from "../layout/Header";
 
 const VehicleDetail = () => {
   const {
     vehicleState: { vehicles },
     getVehicles,
   } = useContext(VehiclesContext);
+  const {
+    updateCart,
+  } = useContext(CartContext);
   const { id } = useParams();
   const [vehicleDetail, setVehicleDetail] = useState([]);
   const [showOrderModal, setShowOrderModal] = useState(false);
-  const [showToast,setShowToast] = useState(false)
+  const [showToast, setShowToast] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const openModal = () => {
     setShowOrderModal(true);
   };
 
   const closeToast = () => {
-      setShowToast(false)
-  }
+    setShowToast(false);
+  };
 
   useEffect(() => {
     getVehicles();
@@ -37,6 +45,7 @@ const VehicleDetail = () => {
   }, [vehicles]);
   return (
     <Fragment>
+      <Header></Header>
       <Toast
         show={showToast}
         style={{ position: "fixed", top: "10%", right: "40%", zIndex: "100" }}
@@ -46,7 +55,10 @@ const VehicleDetail = () => {
         autohide
       >
         <Toast.Body>
-          <strong>Cảm ơn quý khách đã gửi thông tin, chúng tôi sẽ sớm liên hệ với quý khách!</strong>
+          <strong>
+            Cảm ơn quý khách đã gửi thông tin, chúng tôi sẽ sớm liên hệ với quý
+            khách!
+          </strong>
         </Toast.Body>
       </Toast>
       <OrderModal
@@ -65,15 +77,6 @@ const VehicleDetail = () => {
                   src={vehicleDetail?.pictureUrl}
                 />
               </a>
-
-              <div className="flex justify-center">
-                <button
-                  onClick={openModal}
-                  className="btn btn-outline-primary max-w-[140px] mb-3"
-                >
-                  Yêu cầu báo giá
-                </button>
-              </div>
             </div>
           </div>
 
@@ -118,8 +121,40 @@ const VehicleDetail = () => {
               </div>
             </div>
             <div className="row font-normal text-xl  text-[#ea8500] mb-2">
-              Hãy liên hệ với VCM GROUP/ MACHINFO.COM để sở hữu được chiếc cẩu
-              bánh lốp tốt nhất và được bảo hành và hỗ trợ chuyên nghiệp nhất
+              Hãy liên hệ với VCM GROUP/ MACHINFO.COM để sở hữu được máy tốt
+              nhất và được bảo hành và hỗ trợ chuyên nghiệp nhất
+            </div>
+            <div className="row mb-2">
+              <div className="font-bold text-xl mr-3">Số Lượng</div>
+              <Button
+                onClick={() => {
+                  if (quantity > 1) {
+                    setQuantity(quantity - 1);
+                  }
+                }}
+                className="btn btn-light"
+              >
+                <MinusIcon />
+              </Button>
+              <input
+                type="number"
+                className="btn btn-light w-14 rounded-none text-center pr-0"
+                value={quantity}
+                readOnly
+              />
+
+              <Button
+                onClick={() => {
+                  setQuantity(quantity + 1);
+                }}
+                className="btn btn-light"
+              >
+                <PlusIcon />
+              </Button>
+            </div>
+            <div className="row mb-2">
+              <Button className="mr-2">Thêm Vào Giỏ Hàng</Button>
+              <Button>Mua Ngay</Button>
             </div>
             <div className="row info-hotline text-white font-bold text-xl">
               Hotline: 0903 476 661

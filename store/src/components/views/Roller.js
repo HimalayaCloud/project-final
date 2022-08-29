@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment, useContext, useEffect } from "react";
 import { VehiclesContext } from "../../contexts/VehiclesContext";
+import Header from "../layout/Header";
 import NavBanner from "../layout/NavBanner";
 import SingleVehicle from "../vehicles/SingleVehicle";
 
@@ -17,6 +18,7 @@ const Roller = () => {
   console.log(vehicles);
   return (
     <Fragment>
+      <Header></Header>
       <NavBanner></NavBanner>
       <section className="section-name padding-y-sm">
         <div className="container">

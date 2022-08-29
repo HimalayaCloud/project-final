@@ -12,9 +12,11 @@ const ImageModel = require("./models/Image");
 const { uploadFile, getFileStream } = require("./s3");
 const bodyParser = require("body-parser");
 const authRouter = require("./routes/auth");
+const guestRouter = require("./routes/guest");
 const postRouter = require("./routes/posts");
 const vehicleRouter = require("./routes/vehicles");
-const orderRouter = require("./routes/order");
+const cartRouter = require("./routes/cart");
+
 var fileupload = require("express-fileupload");
 
 const connectDB = async () => {
@@ -57,9 +59,12 @@ app.post("/images", upload.single("image"), async (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/guest", guestRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/vehicles", vehicleRouter);
-app.use("/api/orders", orderRouter);
+app.use("/api/cart", cartRouter);
+
+
 
 const PORT = process.env.PORT || 5000;
 

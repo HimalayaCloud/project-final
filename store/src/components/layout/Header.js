@@ -1,7 +1,27 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { CartContext } from "../../contexts/CartContext";
+import { GuestContext } from "../../contexts/GuestContext";
+import LogoutIcon from "../icons/LogoutIcon"
 
 const Header = () => {
+  const {
+    guestState: { guest },
+    logoutGuest,
+  } = useContext(GuestContext);
+
+  const {
+    cartState: { cart },
+    getCart,
+  } = useContext(CartContext);
+  
+  console.log(cart,'dayneeee')
+  useEffect(() => {
+    getCart()
+  }, [])
+  
+
+  const onLogout = () => logoutGuest();
   return (
     <header className="section-header">
       <section className="header-main border-bottom">
@@ -24,7 +44,7 @@ const Header = () => {
                 </div>
               </form>
             </div>
-            {/* <div className="col-lg-4 col-sm-6 col-12">
+            <div className="col-lg-4 col-sm-6 col-12">
               <div className="widgets-wrap float-md-right">
                 <div className="widget-header  mr-3">
                   <a href="#" className="icon icon-sm rounded-circle border">
@@ -35,18 +55,27 @@ const Header = () => {
                   </span>
                 </div>
                 <div className="widget-header icontext">
-                  <a href="#" className="icon icon-sm rounded-circle border">
-                    <i className="fa fa-user"></i>
-                  </a>
                   <div className="text">
-                    <span className="text-muted">Welcome!</span>
-                    <div>
-                      <a href="#">Sign in</a> |<a href="#"> Register</a>
-                    </div>
+                    {guest?.name ? (
+                      <>
+                        <span className="text-muted">
+                          Xin Chào {guest?.name}!
+                        </span>
+                        <button onClick={onLogout} type="button" className="btn btn-dark ml-2">
+                          <LogoutIcon/>
+                          Đăng Xuất
+                        </button>
+                      </>
+                    ) : (
+                      <div>
+                        <a href="dang-nhap">Đăng nhập</a> |
+                        <a href="dang-ky"> Đăng Ký</a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </section>

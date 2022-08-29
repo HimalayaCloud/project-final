@@ -4,6 +4,7 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { VehiclesContext } from "../../contexts/VehiclesContext";
 import NavBanner from "../layout/NavBanner";
 import SingleVehicle from "../vehicles/SingleVehicle";
+import Header from "../layout/Header"
 
 const HomePage = () => {
   const {
@@ -17,6 +18,7 @@ const HomePage = () => {
   console.log(vehicles);
   return (
     <Fragment>
+        <Header></Header>
       <NavBanner></NavBanner>
       <section className="section-name padding-y-sm">
         <div className="container">

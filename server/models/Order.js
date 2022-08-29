@@ -2,24 +2,28 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
-  customer_name: {
-    type: String,
-    required: true,
+  transaction_id: {
+    type: Schema.Types.ObjectId,
+    ref: "transactions",
   },
-  customer_number: {
+  transaction_id: {
+    type: Schema.Types.ObjectId,
+    ref: "vehicles",
+  },
+  qty: {
     type: Number,
-    required: true,
+    default: "0"
   },
-  customer_email: {
-    type: String,
+  amount: {
+    type: Number,
+    default: "0"
   },
-  customer_model: {
+  data: {
     type: String,
   },
   status: {
-    type: String,
-    enum: ["Chưa liên hệ", "Đã liên hệ"],
-    default: "Chưa liên hệ",
+    type: Number,
+    default : "0"
   },
   create_at: {
     type: Date,
