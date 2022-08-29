@@ -28,17 +28,30 @@ router.get("/", verifyToken, async (req, res) => {
 
 router.put("/update", verifyToken, async (req, res) => {
   const cart = await Cart.findOne({ guest_id: req.guestId });
-  const { guest_id, vehicle_id, qty, amount } = req.body;
-  let updatedCart = { guest_id, cart: [{ vehicle_id, qty, amount }] };
-  cart.cart_products.push(updatedCart);
-  await Cart.updateOne(
+  const { guest_id, vehicle_id, quantity } = req.body;
+  let updatedCart = { vehicle_id, quantity };
+  if (
+    cart.cart_products.findIndex(
+      (product) => product.vehicle_id === vehicle_id
+    ) > -1
+  ) {
+    cart.cart_products.forEach((product, index) => {
+      if (product.vehicle_id === vehicle_id) {
+        cart.cart_products[index].quantity += quantity;
+      }
+    });
+  } else cart.cart_products.push(updatedCart);
+  await Cart.findOneAndUpdate(
     { guest_id: req.guestId },
-    { cart_products: cart.cart_products }
+    {
+      guest_id: req.guestId,
+      cart_products: [...cart.cart_products],
+    },
+    { new: true }
   );
 
   const cart2 = await Cart.findOne({ guest_id: req.guestId });
-  console.log(cart2,'aaaaaaaaaaa')
-
+  console.log(JSON.stringify(cart2), "bbbbbbbb");
 });
 
 module.exports = router;

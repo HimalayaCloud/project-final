@@ -13,8 +13,8 @@ const CartContextProvider = ({ children }) => {
   //   Authenticate guest
   const getCart = async () => {
     if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
-        setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
-      }
+      setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+    }
     try {
       const response = await axios.get(`${apiUrl}/cart`);
       // console.log(response);
@@ -29,24 +29,24 @@ const CartContextProvider = ({ children }) => {
     }
   };
 
-  const updateCart = async () => {
+  const updateCart = async (vehicle_id, quantity) => {
     if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
-        setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
-      }
-    try {
-        const response = await axios.put(`${apiUrl}/cart/update`);
-        console.log(response,'response update')
-    } catch (error) {
-        
+      setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
     }
-  }
-
+    try {
+      const response = await axios.put(`${apiUrl}/cart/update`, {
+        vehicle_id,
+        quantity,
+      });
+      console.log(response, "response update");
+    } catch (error) {}
+  };
 
   //   Context Data
   const cartContextData = {
     cartState,
     getCart,
-    updateCart
+    updateCart,
   };
 
   //   return provider

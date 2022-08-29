@@ -51,7 +51,7 @@ const Header = () => {
                     <i className="fa fa-shopping-cart"></i>
                   </a>
                   <span className="badge badge-pill badge-danger notify">
-                    0
+                    {cart?.cart_products?.length}
                   </span>
                 </div>
                 <div className="widget-header icontext">
