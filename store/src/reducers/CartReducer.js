@@ -10,6 +10,16 @@ export const cartReducer = (state, action) => {
         ...state,
         cart,
       };
+    case "CART_UPDATED_SUCCESS":
+      return {
+        ...state,
+        cart,
+      };
+    case "CART_PRODUCT_DELETE":
+      return {
+        ...state,
+        cart,
+      };
 
     default:
       return state;

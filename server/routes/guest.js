@@ -25,7 +25,7 @@ router.get("/", verifyToken, async (req, res) => {
     res.json({
       success: true,
       message: "guest authenticated",
-      guest: { name: guest.guest_name },
+      guest: guest,
     });
   } catch (error) {
     console.log(error);
@@ -38,7 +38,7 @@ router.get("/", verifyToken, async (req, res) => {
 //  @access Public
 
 router.post("/register", async (req, res) => {
-  const { guest_name, password, guest_email } = req.body;
+  const { guest_name, guest_email, password, guest_phone, guest_address  } = req.body;
 
   // simple validation
   if (!guest_name || !password || !guest_email)
@@ -59,6 +59,8 @@ router.post("/register", async (req, res) => {
       guest_name: guest_name,
       guest_email: guest_email,
       password: harshedPassword,
+      guest_phone:guest_phone,
+      guest_address:guest_address
     });
 
     await newGuest.save();

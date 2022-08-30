@@ -8,6 +8,9 @@ const CartSchema = new Schema({
   cart_products: [
     {
       vehicle_id: String,
+      vehicle_name: String,
+      vehicle_price: Number,
+      pictureUrl: String,
       quantity: Number
     }
   ],

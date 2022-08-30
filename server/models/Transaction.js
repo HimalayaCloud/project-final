@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const TransactionSchema = new Schema({
   status: {
     type: Number,
+    default: 0,
   },
   guest_id: {
     type: Schema.Types.ObjectId,
@@ -20,6 +21,9 @@ const TransactionSchema = new Schema({
   },
   guest_phone: {
     type: Number,
+  },
+  guest_address: {
+    type: String,
   },
   amount: {
     type: Number,

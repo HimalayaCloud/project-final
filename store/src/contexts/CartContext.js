@@ -29,16 +29,69 @@ const CartContextProvider = ({ children }) => {
     }
   };
 
-  const updateCart = async (vehicle_id, quantity) => {
+  const updateCart = async (
+    vehicle_id,
+    vehicle_name,
+    vehicle_price,
+    pictureUrl,
+    quantity
+  ) => {
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+      setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+    }
+
+    try {
+      const response = await axios.put(`${apiUrl}/cart/update`, {
+        vehicle_id,
+        vehicle_name,
+        vehicle_price,
+        pictureUrl,
+        quantity,
+      });
+      if (response.data.success) {
+        dispatch({
+          type: "CART_UPDATED_SUCCESS",
+          payload: { cart: response.data.cart },
+        });
+      }
+      console.log(response, "response update");
+    } catch (error) {}
+  };
+
+  const updateQuantity = async (cart_products) => {
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+      setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+    }
+
+    try {
+      const response = await axios.put(`${apiUrl}/cart/update-quantity`, {
+        cart_products,
+      });
+      if (response.data.success) {
+        dispatch({
+          type: "CART_UPDATED_SUCCESS",
+          payload: { cart: response.data.cart },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteCartProduct = async (vehicle_id) => {
     if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
       setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
     }
     try {
-      const response = await axios.put(`${apiUrl}/cart/update`, {
+      const response = await axios.put(`${apiUrl}/cart/delete-product`, {
         vehicle_id,
-        quantity,
       });
-      console.log(response, "response update");
+      if (response.data.success) {
+        dispatch({
+          type: "CART_PRODUCT_DELETE",
+          payload: { cart: response.data.cart },
+        });
+      }
     } catch (error) {}
   };
 
@@ -47,6 +100,8 @@ const CartContextProvider = ({ children }) => {
     cartState,
     getCart,
     updateCart,
+    updateQuantity,
+    deleteCartProduct,
   };
 
   //   return provider

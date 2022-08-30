@@ -53,10 +53,10 @@ const NavbarMenu = () => {
             </Nav.Link>
             <Nav.Link
               className="font-weight-bolder text-white"
-              to="/trang-bao-gia"
+              to="/don-hang"
               as={Link}
             >
-              Trang Báo Giá
+              Đơn Hàng
             </Nav.Link>
           </Nav>
           <Nav className="align-center">

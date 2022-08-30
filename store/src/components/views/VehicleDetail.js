@@ -43,13 +43,19 @@ const VehicleDetail = () => {
   }, [vehicles]);
   return (
     <Fragment>
+      <Header></Header>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          updateCart(id, quantity);
+          updateCart(
+            id,
+            vehicleDetail.vehicle_name,
+            vehicleDetail.price,
+            vehicleDetail.pictureUrl,
+            quantity
+          );
         }}
       >
-        <Header></Header>
         <Toast
           show={showToast}
           style={{ position: "fixed", top: "10%", right: "40%", zIndex: "100" }}
@@ -157,7 +163,9 @@ const VehicleDetail = () => {
                 </Button>
               </div>
               <div className="row mb-2">
-                <Button type="submit" className="mr-2">Thêm Vào Giỏ Hàng</Button>
+                <Button type="submit" className="mr-2">
+                  Thêm Vào Giỏ Hàng
+                </Button>
               </div>
               <div className="row info-hotline text-white font-bold text-xl">
                 Hotline: 0903 476 661

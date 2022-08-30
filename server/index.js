@@ -16,6 +16,7 @@ const guestRouter = require("./routes/guest");
 const postRouter = require("./routes/posts");
 const vehicleRouter = require("./routes/vehicles");
 const cartRouter = require("./routes/cart");
+const transactionRouter = require("./routes/transaction");
 
 var fileupload = require("express-fileupload");
 
@@ -63,6 +64,7 @@ app.use("/api/guest", guestRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/vehicles", vehicleRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/transaction", transactionRouter);
 
 
 

@@ -15,10 +15,10 @@ const Header = () => {
     getCart,
   } = useContext(CartContext);
   
-  console.log(cart,'dayneeee')
   useEffect(() => {
     getCart()
   }, [])
+
   
 
   const onLogout = () => logoutGuest();
@@ -47,7 +47,7 @@ const Header = () => {
             <div className="col-lg-4 col-sm-6 col-12">
               <div className="widgets-wrap float-md-right">
                 <div className="widget-header  mr-3">
-                  <a href="#" className="icon icon-sm rounded-circle border">
+                  <a href="/gio-hang" className="icon icon-sm rounded-circle border">
                     <i className="fa fa-shopping-cart"></i>
                   </a>
                   <span className="badge badge-pill badge-danger notify">
@@ -56,10 +56,10 @@ const Header = () => {
                 </div>
                 <div className="widget-header icontext">
                   <div className="text">
-                    {guest?.name ? (
+                    {guest?.guest_name ? (
                       <>
                         <span className="text-muted">
-                          Xin Chào {guest?.name}!
+                          Xin Chào {guest?.guest_name}!
                         </span>
                         <button onClick={onLogout} type="button" className="btn btn-dark ml-2">
                           <LogoutIcon/>

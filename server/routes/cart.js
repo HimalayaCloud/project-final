@@ -7,7 +7,6 @@ const Cart = require("../models/Cart");
 // @access Public
 router.get("/", verifyToken, async (req, res) => {
   try {
-    console.log(req.guestId);
     const cart = await Cart.findOne({ guest_id: req.guestId });
     if (!cart) {
       return res
@@ -26,10 +25,41 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
+router.put("/update-quantity", verifyToken, async (req, res) => {
+  const cart = await Cart.findOne({ guest_id: req.guestId });
+  const updated_cart = req.body.cart_products;
+  await Cart.findOneAndUpdate(
+    { guest_id: req.guestId },
+    {
+      guest_id: req.guestId,
+      cart_products: updated_cart,
+    },
+    { new: true }
+  );
+
+  res.json({
+    success: true,
+    message: "Update successful",
+    cart: {
+      guest_id: req.guestId,
+      __v: 0,
+      _id: cart._id,
+      cart_products: updated_cart,
+    },
+  });
+});
+
 router.put("/update", verifyToken, async (req, res) => {
   const cart = await Cart.findOne({ guest_id: req.guestId });
-  const { guest_id, vehicle_id, quantity } = req.body;
-  let updatedCart = { vehicle_id, quantity };
+  const { vehicle_id, vehicle_name, vehicle_price, pictureUrl, quantity } =
+    req.body;
+  let updatedCart = {
+    vehicle_id,
+    vehicle_name,
+    vehicle_price,
+    pictureUrl,
+    quantity,
+  };
   if (
     cart.cart_products.findIndex(
       (product) => product.vehicle_id === vehicle_id
@@ -41,6 +71,7 @@ router.put("/update", verifyToken, async (req, res) => {
       }
     });
   } else cart.cart_products.push(updatedCart);
+  console.log(cart);
   await Cart.findOneAndUpdate(
     { guest_id: req.guestId },
     {
@@ -50,8 +81,55 @@ router.put("/update", verifyToken, async (req, res) => {
     { new: true }
   );
 
-  const cart2 = await Cart.findOne({ guest_id: req.guestId });
-  console.log(JSON.stringify(cart2), "bbbbbbbb");
+  res.json({
+    success: true,
+    message: "Update Success!",
+    cart: {
+      guest_id: req.guestId,
+      __v: 0,
+      _id: cart._id,
+      cart_products: [...cart.cart_products],
+    },
+  });
+
+  // const cart2 = await Cart.findOne({ guest_id: req.guestId });
+  // console.log(JSON.stringify(cart2), "bbbbbbbb");
+});
+
+router.put("/delete-product", verifyToken, async (req, res) => {
+  const cart = await Cart.findOne({ guest_id: req.guestId });
+  const updated_cart = cart.cart_products.map((product) => {
+    if (product.vehicle_id !== req.body.vehicle_id) {
+      return product;
+    }
+  });
+
+  updated_cart.map((product, index) => {
+    if (!product) {
+      updated_cart.splice(index, 1);
+    }
+  });
+
+  await Cart.findOneAndUpdate(
+    { guest_id: req.guestId },
+    {
+      guest_id: req.guestId,  
+      cart_products: updated_cart,
+    },
+    { new: true }
+  );
+
+  // console.log(updated_cart);
+  res.json({
+    success: true,
+    message: "Delete successful",
+    cart: {
+      guest_id: req.guestId,
+      __v: 0,
+      _id: cart._id,
+      cart_products: updated_cart,
+    },
+  });
 });
 
 module.exports = router;
