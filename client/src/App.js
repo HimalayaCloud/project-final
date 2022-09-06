@@ -11,6 +11,7 @@ import VehicleContextProvider from "./contexts/VehicleContext";
 import ProductPage from "./component/views/ProductPage";
 import OrdersPage from "./component/views/OrdersPage";
 import TransactionContextProvider from "./contexts/TransactionContext";
+import Revenue from "./component/views/Revenue";
 
 function App() {
   return (
@@ -49,6 +50,13 @@ function App() {
                   exact
                   path="/don-hang"
                   element={<OrdersPage></OrdersPage>}
+                ></Route>
+              </Route>
+              <Route exact element={<ProtectedRoute />}>
+                <Route
+                  exact
+                  path="/doanh-thu"
+                  element={<Revenue></Revenue>}
                 ></Route>
               </Route>
             </Routes>

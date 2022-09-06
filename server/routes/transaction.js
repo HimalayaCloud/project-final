@@ -3,7 +3,7 @@ const router = express.Router();
 const verifyToken = require("../middleware/auth");
 const Transaction = require("../models/Transaction");
 const Cart = require("../models/Cart");
-const { response } = require("express");
+const { response, Router } = require("express");
 // @route Get api/auth
 // @desc check if user is authenticated
 // @access Public
@@ -15,7 +15,7 @@ router.post("/", verifyToken, async (req, res) => {
     guest_phone,
     guest_address,
     amount,
-    order_details
+    order_details,
   } = req.body.transactionInfo;
 
   // console.log(req.files.picture, " picture uploaded!!!!!!!!");
@@ -37,7 +37,7 @@ router.post("/", verifyToken, async (req, res) => {
       guest_phone,
       guest_address,
       amount,
-      order_details
+      order_details,
     });
 
     await newTransaction.save();
@@ -54,7 +54,7 @@ router.post("/", verifyToken, async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({success: false, message: "Internal Server Error"});
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
 
@@ -107,6 +107,33 @@ router.delete("/:id", verifyToken, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: " Internal Server Error" });
+  }
+});
+
+router.get("/revenue", async (req, res) => {
+  const startDate = req.query.startDate;
+  const endDate = req.query.endDate;
+
+  try {
+    const orderByMonth = await Transaction.find({
+      updatedAt: {
+        $gte: startDate,
+        $lt: endDate,
+      },
+      status: 1
+    });
+    let totalAmount = 0;
+    orderByMonth.forEach((order) => {
+      totalAmount += order.amount;
+    });
+    res.json({
+      success: true,
+      message: "Result get order by month",
+      totalAmount: totalAmount,
+      items: orderByMonth,
+    });
+  } catch (error) {
+    console.log(error);
   }
 });
 

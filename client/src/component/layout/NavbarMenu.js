@@ -58,6 +58,13 @@ const NavbarMenu = () => {
             >
               Đơn Hàng
             </Nav.Link>
+            <Nav.Link
+              className="font-weight-bolder text-white"
+              to="/doanh-thu"
+              as={Link}
+            >
+              Doanh Thu
+            </Nav.Link>
           </Nav>
           <Nav className="align-center">
             <Nav.Link className="font-weight-bolder text-white" disabled>

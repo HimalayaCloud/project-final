@@ -1,0 +1,10 @@
+.datepicker-wrapper {
+    margin-bottom: 30px;
+    height: fit-content;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -3,22 +3,21 @@ import NavbarMenu from "../layout/NavbarMenu";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Modal, Table, Toast } from "react-bootstrap";
 import { TransactionContext } from "../../contexts/TransactionContext";
+import OrderDetailModal from "../vehicles/OrderDetailModal";
 
 const OrdersPage = () => {
-  const [orderDetailModal, setOrderDetailModal] = useState(false)
-
   const {
     transactionState: { transactions },
     getTransaction,
     updateStatus,
     deleteTransaction,
+    setShowModal,
+    findOrderDetails,
   } = useContext(TransactionContext);
 
   useEffect(() => {
     getTransaction();
   }, []);
-
-  console.log(transactions, "dayyyyneneee");
 
   const onUpdateStatus = (transaction) => {
     if (transaction.status === 0) {
@@ -34,19 +33,10 @@ const OrdersPage = () => {
     deleteTransaction(transaction_id);
   };
 
-  const closeModal = () => {
-    setOrderDetailModal(false)
-  }
-
   return (
     <>
       <NavbarMenu></NavbarMenu>
-      <Modal show={orderDetailModal} onHide={closeModal}>
-        <Modal.Header closeButton><h2>Chi tiết hóa đơn</h2></Modal.Header>
-        <Modal.Body>
-          <div>Tên khách hàng:</div>
-        </Modal.Body>
-      </Modal>
+      <OrderDetailModal></OrderDetailModal>
       <div className="h-screen bg-[whitesmoke] pt-12">
         <div className="w-[1280px] overflow-auto max-h-[600px] mx-auto bg-white rounded relative mt-2 p-4">
           <div className="text-3xl pb-2 border-solid border-x-0 border-t-0 border-b-2 border-black">
@@ -70,7 +60,7 @@ const OrdersPage = () => {
               {transactions?.map((transaction, index) => {
                 let create_at = new Date(transaction.createdAt);
                 return (
-                  <tr>
+                  <tr key={index}>
                     <td>{index}</td>
                     <td>{transaction.guest_name}</td>
                     <td>{transaction.guest_email}</td>
@@ -104,7 +94,7 @@ const OrdersPage = () => {
                           onDeleteTransaction(transaction._id);
                         }}
                         disabled={transaction.status === 0 ? false : true}
-                        class={
+                        className={
                           transaction.status === 0
                             ? "btn btn-info"
                             : "btn btn-secondary "
@@ -112,7 +102,16 @@ const OrdersPage = () => {
                       >
                         Hủy đơn
                       </button>{" "}
-                      | <button onClick={() => {setOrderDetailModal(true)}} className="btn btn-success">Chi tiết</button>
+                      |{" "}
+                      <button
+                        onClick={() => {
+                          findOrderDetails(transaction._id);
+                          setShowModal(true);
+                        }}
+                        className="btn btn-success"
+                      >
+                        Chi tiết
+                      </button>
                     </td>
                   </tr>
                 );

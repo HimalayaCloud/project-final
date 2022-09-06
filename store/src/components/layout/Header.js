@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../contexts/CartContext";
 import { GuestContext } from "../../contexts/GuestContext";
+import { VehiclesContext } from "../../contexts/VehiclesContext";
 import LogoutIcon from "../icons/LogoutIcon";
 
 const Header = () => {
@@ -16,6 +17,11 @@ const Header = () => {
     getCart,
   } = useContext(CartContext);
 
+  const {
+    vehicleState: { vehicles },
+    searchVehicles,
+  } = useContext(VehiclesContext);
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -27,6 +33,23 @@ const Header = () => {
     navigate('/')
     window.location.reload()
   };
+  const [searchInfo, setSearchInfo] = useState({
+    vehicle_name: "",
+    vehicle_type: "",
+    price_range: { minPrice: 0, maxPrice: 100000 },
+    bucket_capacity: "",
+    vehicle_tonnage: "",
+  });
+
+  const onChangeSearchVehicleForm = (event) => {
+    setSearchInfo({ ...searchInfo, [event.target.name]: event.target.value });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const response = await searchVehicles(searchInfo);
+    console.log(response,'dauyne');
+  };
   return (
     <header className="section-header">
       <section className="header-main border-bottom">
@@ -34,11 +57,13 @@ const Header = () => {
           <div className="row align-items-center">
             <div className="col-lg-2 col-4 font-bold text-3xl">VCM GROUP</div>
             <div className="col-lg-6 col-sm-12">
-              <form action="#" className="search">
+              <form onSubmit={onSubmit} className="search">
                 <div className="input-group w-100">
                   <input
                     type="text"
                     className="form-control"
+                    name="vehicle_name"
+                    onChange={onChangeSearchVehicleForm}
                     placeholder="Search"
                   />
                   <div className="input-group-append">
