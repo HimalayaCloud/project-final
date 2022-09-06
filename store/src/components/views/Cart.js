@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CartContext } from "../../contexts/CartContext";
@@ -9,8 +10,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GuestContext } from "../../contexts/GuestContext";
 import { TransactionContext } from "../../contexts/TransactionContext";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem("access-token");
+
   const {
     cartState: { cart },
     getCart,
@@ -20,7 +25,7 @@ const Cart = () => {
 
   const {
     transactionState: { transactions },
-    createTransaction
+    createTransaction,
   } = useContext(TransactionContext);
 
   const {
@@ -42,7 +47,11 @@ const Cart = () => {
     );
 
   useEffect(() => {
-    getCart();
+    if (accessToken !== null) {
+      getCart();
+    } else {
+      navigate("/dang-nhap");
+    }
   }, []);
 
   const onChangeQuantity = (vehicle_id, new_quantity) => {
@@ -72,6 +81,7 @@ const Cart = () => {
       guest_phone: guest.guest_phone,
       guest_address: guest.guest_address,
       amount: totalPayment,
+      order_details: cart.cart_products,
     };
     const response = createTransaction(transactionInfo);
     if (response) {
@@ -85,6 +95,7 @@ const Cart = () => {
 
       <section className="section-name padding-y-sm">
         <div className="container">
+          <a href="/don-hang" className="btn btn-primary mb-2">Kiểm tra đơn hàng</a>
           <table
             className="table table-hover"
             style={{ backgroundColor: "whitesmoke" }}
@@ -183,10 +194,10 @@ const Cart = () => {
             <div className="float-right mr-3 text-2xl">
               Tổng tiền: {""}
               <span className="text-red-500">
-                ₫
-                {totalPayment > 1000
+                
+                {totalPayment > 999
                   ? `${totalPayment / 1000} tỷ`
-                  : `${totalPayment} triệu`}
+                  : `${totalPayment} triệu`} VNĐ
               </span>
             </div>
             <ToastContainer />

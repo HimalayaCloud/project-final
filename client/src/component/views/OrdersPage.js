@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavbarMenu from "../layout/NavbarMenu";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Table, Toast } from "react-bootstrap";
+import { Modal, Table, Toast } from "react-bootstrap";
 import { TransactionContext } from "../../contexts/TransactionContext";
 
 const OrdersPage = () => {
+  const [orderDetailModal, setOrderDetailModal] = useState(false)
+
   const {
     transactionState: { transactions },
     getTransaction,
@@ -17,8 +19,6 @@ const OrdersPage = () => {
   }, []);
 
   console.log(transactions, "dayyyyneneee");
-  let create_at = new Date();
-  // create_at = transaction.createAt.toLocaleString('en-US')
 
   const onUpdateStatus = (transaction) => {
     if (transaction.status === 0) {
@@ -34,12 +34,24 @@ const OrdersPage = () => {
     deleteTransaction(transaction_id);
   };
 
+  const closeModal = () => {
+    setOrderDetailModal(false)
+  }
+
   return (
     <>
       <NavbarMenu></NavbarMenu>
+      <Modal show={orderDetailModal} onHide={closeModal}>
+        <Modal.Header closeButton><h2>Chi tiết hóa đơn</h2></Modal.Header>
+        <Modal.Body>
+          <div>Tên khách hàng:</div>
+        </Modal.Body>
+      </Modal>
       <div className="h-screen bg-[whitesmoke] pt-12">
         <div className="w-[1280px] overflow-auto max-h-[600px] mx-auto bg-white rounded relative mt-2 p-4">
-        <div className="text-3xl pb-2 border-solid border-x-0 border-t-0 border-b-2 border-black">Danh sách giao dịch</div>
+          <div className="text-3xl pb-2 border-solid border-x-0 border-t-0 border-b-2 border-black">
+            Danh sách giao dịch
+          </div>
           <Table style={{ overflowY: "scroll" }}>
             <thead>
               <tr>
@@ -50,8 +62,8 @@ const OrdersPage = () => {
                 <th style={{ width: "10%" }}>Số Điện Thoại</th>
                 <th style={{ width: "10%" }}>Tổng Tiền</th>
                 <th style={{ width: "10%" }}>Ngày Tạo</th>
-                <th style={{ width: "15%" }}>Trạng Thái</th>
-                <th style={{ width: "15%" }}>Thao Tác</th>
+                <th style={{ width: "5%" }}>Trạng Thái</th>
+                <th style={{ width: "25%" }}>Thao Tác</th>
               </tr>
             </thead>
             <tbody>
@@ -99,7 +111,8 @@ const OrdersPage = () => {
                         }
                       >
                         Hủy đơn
-                      </button>
+                      </button>{" "}
+                      | <button onClick={() => {setOrderDetailModal(true)}} className="btn btn-success">Chi tiết</button>
                     </td>
                   </tr>
                 );

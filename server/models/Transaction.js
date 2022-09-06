@@ -28,6 +28,15 @@ const TransactionSchema = new Schema({
   amount: {
     type: Number,
   },
+  order_details: [
+    {
+      vehicle_id: String,
+      vehicle_name: String,
+      vehicle_price: Number,
+      pictureUrl: String,
+      quantity: Number
+    }
+  ],
   payment: {
     type: String,
   },

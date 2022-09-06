@@ -16,6 +16,7 @@ import Register from "./components/views/Register";
 import GuestContextProvider from "./contexts/GuestContext";
 import CartContextProvider from "./contexts/CartContext";
 import TransactionContextProvider from "./contexts/TransactionContext";
+import Orders from "./components/views/Orders";
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
                 <Route
                   path="/:id"
                   element={<VehicleDetail></VehicleDetail>}
+                ></Route>
+                <Route
+                  path="/don-hang"
+                  element={<TransactionContextProvider><Orders></Orders></TransactionContextProvider>}
                 ></Route>
               </Routes>
             </Router>

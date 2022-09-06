@@ -15,6 +15,7 @@ router.post("/", verifyToken, async (req, res) => {
     guest_phone,
     guest_address,
     amount,
+    order_details
   } = req.body.transactionInfo;
 
   // console.log(req.files.picture, " picture uploaded!!!!!!!!");
@@ -36,6 +37,7 @@ router.post("/", verifyToken, async (req, res) => {
       guest_phone,
       guest_address,
       amount,
+      order_details
     });
 
     await newTransaction.save();
@@ -52,7 +54,7 @@ router.post("/", verifyToken, async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: " Internal Server Error" });
+    res.status(500).json({success: false, message: "Internal Server Error"});
   }
 });
 

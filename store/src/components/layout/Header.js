@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../contexts/CartContext";
 import { GuestContext } from "../../contexts/GuestContext";
-import LogoutIcon from "../icons/LogoutIcon"
+import LogoutIcon from "../icons/LogoutIcon";
 
 const Header = () => {
   const {
@@ -14,14 +15,18 @@ const Header = () => {
     cartState: { cart },
     getCart,
   } = useContext(CartContext);
-  
+
+  const navigate = useNavigate()
+
   useEffect(() => {
-    getCart()
-  }, [])
+    getCart();
+  }, []);
 
-  
-
-  const onLogout = () => logoutGuest();
+  const onLogout = () => {
+    logoutGuest();
+    navigate('/')
+    window.location.reload()
+  };
   return (
     <header className="section-header">
       <section className="header-main border-bottom">
@@ -47,7 +52,10 @@ const Header = () => {
             <div className="col-lg-4 col-sm-6 col-12">
               <div className="widgets-wrap float-md-right">
                 <div className="widget-header  mr-3">
-                  <a href="/gio-hang" className="icon icon-sm rounded-circle border">
+                  <a
+                    href="/gio-hang"
+                    className="icon icon-sm rounded-circle border"
+                  >
                     <i className="fa fa-shopping-cart"></i>
                   </a>
                   <span className="badge badge-pill badge-danger notify">
@@ -61,8 +69,12 @@ const Header = () => {
                         <span className="text-muted">
                           Xin Chào {guest?.guest_name}!
                         </span>
-                        <button onClick={onLogout} type="button" className="btn btn-dark ml-2">
-                          <LogoutIcon/>
+                        <button
+                          onClick={onLogout}
+                          type="button"
+                          className="btn btn-dark ml-2"
+                        >
+                          <LogoutIcon />
                           Đăng Xuất
                         </button>
                       </>

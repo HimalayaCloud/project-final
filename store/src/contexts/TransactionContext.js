@@ -40,7 +40,7 @@ const TransactionContextProvider = ({ children }) => {
       setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
     }
     try {
-      const response = await axios.post(`${apiUrl}/transaction`);
+      const response = await axios.get(`${apiUrl}/transaction`);
       if (response.data.success) {
         dispatch({
             type: "TRANSACTION_CREATE_SUCCESS",

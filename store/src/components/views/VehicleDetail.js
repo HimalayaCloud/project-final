@@ -2,25 +2,30 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Button, Form, Toast } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { VehiclesContext } from "../../contexts/VehiclesContext";
 import { CartContext } from "../../contexts/CartContext";
 import OrderModal from "../vehicles/OrderModal";
 import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import Header from "../layout/Header";
+import { GuestContext } from "../../contexts/GuestContext";
 
 const VehicleDetail = () => {
   const {
     vehicleState: { vehicles },
     getVehicles,
   } = useContext(VehiclesContext);
+  const {
+    guestState: { guest },
+  } = useContext(GuestContext);
   const { updateCart } = useContext(CartContext);
   const { id } = useParams();
   const [vehicleDetail, setVehicleDetail] = useState([]);
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate()
 
   const openModal = () => {
     setShowOrderModal(true);
@@ -41,19 +46,27 @@ const VehicleDetail = () => {
       }
     });
   }, [vehicles]);
+
+  const onUpdateCart = () => {
+    if (guest !== null) {
+      updateCart(
+        id,
+        vehicleDetail.vehicle_name,
+        vehicleDetail.price,
+        vehicleDetail.pictureUrl,
+        quantity
+      );
+    }else{
+      navigate('/dang-nhap')
+    }
+  };
   return (
     <Fragment>
       <Header></Header>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          updateCart(
-            id,
-            vehicleDetail.vehicle_name,
-            vehicleDetail.price,
-            vehicleDetail.pictureUrl,
-            quantity
-          );
+          onUpdateCart();
         }}
       >
         <Toast
